@@ -1,0 +1,10 @@
+sudo: required
+dist: trusty
+services:
+  - mongodb
+language: node_js
+node_js:
+  - 5.11.1
+install:
+  - npm install
+script: npm test

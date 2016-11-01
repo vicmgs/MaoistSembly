@@ -7,11 +7,11 @@
     "test": "mocha ./specs",
     "runDev": "node server/server.js production",
     "start": "MONGODB_URI='mongodb://dbuser:dbuser@ds027318.mlab.com:27318/heroku_zdm2dm12' PRODUCTION=true node server/server.js",
-    "populate": "node testData.js",
-    "postinstall": "npm run populate"
+    "populate": "node testData.js"
   },
   "engines": {
-    "npm": "4.5.x"
+    "node": "5.11.1",
+    "npm": "3.10.9"
   },
   "repository": {
     "type": "git",
