@@ -5,7 +5,8 @@ import {
   View,
   Navigator,
   TouchableHighlight,
-  TouchableOpacity
+  TouchableOpacity,
+  TextInput
 } from 'react-native';
 
 
@@ -33,6 +34,19 @@ button: {
   marginBottom: 10,
   alignSelf: 'stretch',
   justifyContent: 'center'
+},
+searchInput: {
+  height: 36,
+  flex: 4,
+  fontSize: 18,
+  color: 'black'
+},
+inputContainer: {
+  alignItems: 'center',
+  alignSelf: 'stretch',
+  margin: 10,
+  borderBottomWidth: 1,
+  borderBottomColor: '#F44336',
 }
 });
 
@@ -40,50 +54,38 @@ button: {
 export default class LoginForm extends Component {
   constructor(props){
     super(props);
-    this.state = {loading: false}
+    this.state = {
+      loading: false,
+      em: null,
+      pw: null
+    };
   }
 
-  // _navigate() {
-  //   this.props.navigator.push({
-  //       name: 'Map'
-  //   });
-  // }
-  //
-  // componentWillMount () {
-  //   this.props.getLocation();
-  // }
-  //
-  // login() {
-  //   this.setState({loading: true});
-  //   fetch('http://localhost:3000/api/users/login',{
-  //     method: 'POST',
-  //     headers: { "Content-Type" : "application/json" },
-  //     body: JSON.stringify({email: 'spencer@test.com', password: 'test'})
-  //   })
-  //   .then(response => {
-  //     return response.json();
-  //   })
-  //   .then( user => {
-  //     this.props.setUser(user);
-  //     this._navigate();
-  //   })
-  // }
+  _navigate() {
+    this.props.navigator.push({
+        name: 'Map'
+    });
+  }
 
-  //  register() {
-  //    this.setState({loading: true});
-  //     fetch('http://localhost:3000/api/users/login',{
-  //       method: 'POST',
-  //       headers: { "Content-Type" : "application/json" },
-  //       body: JSON.stringify({email: 'spencer@test.com', password: 'test'})
-  //     })
-  //     .then(response => {
-  //       return response.json();
-  //     })
-  //     .then( user => {
-  //       this.props.setUser(user);
-  //       this._navigate();
-  //     })
-  //   }
+  componentWillMount () {
+    this.props.getLocation();
+  }
+
+  login() {
+    this.setState({loading: true});
+    fetch('http://localhost:3000/api/users/login',{
+      method: 'POST',
+      headers: { "Content-Type" : "application/json" },
+      body: JSON.stringify({email: 'spencer@test.com', password: 'test'})
+    })
+    .then(response => {
+      return response.json();
+    })
+    .then( user => {
+      this.props.setUser(user);
+      this._navigate();
+    })
+  }
 
   render(){
     if (this.state.loading) {
@@ -93,6 +95,19 @@ export default class LoginForm extends Component {
       return (
         <View>
           <View style={styles.container}>
+            <View style={styles.inputContainer}>
+              <TextInput
+                style={styles.searchInput}
+                placeholder='Enter email'
+                // onChange={this.onSearchTextChange.bind(this)}
+                />
+              <TextInput
+                style={styles.searchInput}
+                placeholder='Enter password'
+                secureTextEntry={true}
+                // onChange={this.onSearchTextChange.bind(this)}
+                />
+            </View>
             <TouchableOpacity onPress={(e)=>{this.login()}} style={styles.button}>
               <Text style={styles.buttonText}>Login</Text>
             </TouchableOpacity>

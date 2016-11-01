@@ -36,7 +36,7 @@ export default class App extends Component {
 
   renderScene(route, navigator){
     if(route.name === 'LoginPage'){
-      return <LoginPage getLocation={app.getLocation.bind(app)} setUser={app.setUser.bind(app)} navigator={navigator}/>
+      return <LoginPage navigator={navigator}/>
     }
     if(route.name === 'LoginForm'){
       return <LoginForm getLocation={app.getLocation.bind(app)} setUser={app.setUser.bind(app)} navigator={navigator}/>
