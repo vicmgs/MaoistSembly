@@ -5,8 +5,13 @@
   "main": "server/server.js",
   "scripts": {
     "test": "mocha ./specs",
-    "start": "node server/server.js production",
-    "populate": "node testData.js"
+    "runDev": "node server/server.js production",
+    "start": "MONGODB_URI='mongodb://dbuser:dbuser@ds027318.mlab.com:27318/heroku_zdm2dm12' PRODUCTION=true node server/server.js",
+    "populate": "node testData.js",
+    "postinstall": "npm run populate"
+  },
+  "engines": {
+    "npm": "4.5.x"
   },
   "repository": {
     "type": "git",
