@@ -9,10 +9,6 @@ import {
   TouchableOpacity
 } from 'react-native';
 
-
-import Spinner from './Spinner.js'
-
-
 const styles = StyleSheet.create({
 container: {
   padding: 30,
@@ -29,8 +25,8 @@ label:{
 
 },
 fieldText:{
-  height: 40, 
-  borderColor: 'gray', 
+  height: 40,
+  borderColor: 'gray',
   borderWidth: 1,
 },
 button: {
@@ -49,83 +45,32 @@ button: {
 export default class LoginPage extends Component {
   constructor(props){
     super(props);
-    this.state = {loading: false, email: null, password: null}
   }
 
-  _navigate() {
+  goLogin() {
     this.props.navigator.push({
-        name: 'Map'
+        name: 'LoginForm'
     });
   }
 
-  componentWillMount () {
-    this.props.getLocation();
-  }
-
-  signUp() {
-    this.setState({loading: true});
-    fetch('http://localhost:3000/api/users/signup',{
-      method: 'POST',
-      headers: { "Content-Type" : "application/json" },
-      body: JSON.stringify({email: this.state.email, password: this.state.password})
-    })
-    .then(response => {
-      return response.json();
-    })
-    .then( user => {
-      this.props.setUser(user);
-      this._navigate();
-    })
-  }
-
-  login() {
-    this.setState({loading: true});
-    fetch('http://localhost:3000/api/users/login',{
-      method: 'POST',
-      headers: { "Content-Type" : "application/json" },
-      body: JSON.stringify({email: this.state.email, password: this.state.password})
-    })
-    .then(response => {
-      return response.json();
-    })
-    .then( user => {
-      this.props.setUser(user);
-      this._navigate();
-    })
+  goRegis() {
+    this.props.navigator.push({
+        name: 'RegisForm'
+    });
   }
 
   render(){
-    if (this.state.loading) {
-      return (<View style={styles.container}><Spinner/></View>)
-    }
-    else {
-      return (
-        <View>
-          <View style={styles.container}>
-              <Text style={styles.fieldText}>User:</Text>
-              <TextInput
-                style={styles.fieldText}
-                autoCapitalize='none'
-                onChangeText={(text) => this.setState({email:text})} 
-                value={this.state.email} 
-              />
-              
-              <Text style={styles.fieldText}>Password:</Text>
-
-              <TextInput
-
-                style={styles.fieldText}
-                autoCapitalize='none'
-                secureTextEntry={true}
-                onChangeText={(pwtext) => this.setState({password:pwtext})} 
-                value={this.state.password} 
-              />
-            <TouchableOpacity onPress={(e)=>{this.login()}} style={styles.button}>
-              <Text style={styles.buttonText}>Login</Text>
-            </TouchableOpacity>
-          </View>
+    return (
+      <View>
+        <View style={styles.container}>
+          <TouchableOpacity onPress={this.goLogin.bind(this)} style={styles.button}>
+            <Text style={styles.buttonText}>Login</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this.goRegis.bind(this)} style={styles.button}>
+            <Text style={styles.buttonText}>Register</Text>
+          </TouchableOpacity>
         </View>
-      );
-    }
+      </View>
+    );
   }
 };
