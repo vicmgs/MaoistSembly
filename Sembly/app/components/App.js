@@ -1,4 +1,12 @@
 import React, { Component } from 'react';
+/*
+https://facebook.github.io/react-native/docs/statusbar.html
+https://facebook.github.io/react-native/docs/stylesheet.html
+https://facebook.github.io/react-native/docs/text.html
+https://facebook.github.io/react-native/docs/view.html
+https://facebook.github.io/react-native/docs/using-navigators.html
+*/
+
 import {
   StatusBar,
   StyleSheet,
@@ -58,7 +66,6 @@ export default class App extends Component {
    return Navigator.SceneConfigs.FadeAndroid;
   }
 
-
   render () {
     return (
       <Navigator
@@ -70,8 +77,8 @@ export default class App extends Component {
   }
 }
 
-
 const styles = StyleSheet.create({
   container: {
+
   }
 });

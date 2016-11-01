@@ -12,6 +12,7 @@ module.exports = function (app, express) {
 	  next();
   })
   // Parse Post Bodys
+  //https://goo.gl/JFe5Np
   app.use(bodyParser.urlencoded({extended: true}));
-  app.use(bodyParser.json());
+  app.use(bodyParser.json());//provided by above
 };

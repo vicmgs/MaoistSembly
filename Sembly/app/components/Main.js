@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+
 import {
   StyleSheet,
   Text,
@@ -8,6 +9,7 @@ import {
   TouchableOpacity
 } from 'react-native';
 
+//https://github.com/root-two/react-native-drawer
 import Drawer from 'react-native-drawer';
 
 import TopBar from './TopBar.js';
