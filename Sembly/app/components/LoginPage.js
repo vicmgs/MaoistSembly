@@ -8,10 +8,6 @@ import {
   TouchableOpacity
 } from 'react-native';
 
-
-import Spinner from './Spinner.js'
-
-
 const styles = StyleSheet.create({
 container: {
   padding: 30,
@@ -40,49 +36,32 @@ button: {
 export default class LoginPage extends Component {
   constructor(props){
     super(props);
-    this.state = {loading: false}
   }
 
-  _navigate() {
+  goLogin() {
     this.props.navigator.push({
-        name: 'Map'
+        name: 'LoginForm'
     });
   }
 
-  componentWillMount () {
-    this.props.getLocation();
+  goRegis() {
+    this.props.navigator.push({
+        name: 'RegisForm'
+    });
   }
 
-  login() {
-    this.setState({loading: true});
-     fetch('http://localhost:3000/api/users/login',{
-       method: 'POST',
-       headers: { "Content-Type" : "application/json" },
-       body: JSON.stringify({email: 'spencer@test.com', password: 'test'})
-     })
-     .then(response => {
-       return response.json();
-     })
-     .then( user => {
-       this.props.setUser(user);
-       this._navigate();
-     })
-   }
-
   render(){
-    if (this.state.loading) {
-      return (<View style={styles.container}><Spinner/></View>)
-    }
-    else {
-      return (
-        <View>
-          <View style={styles.container}>
-            <TouchableOpacity onPress={(e)=>{this.login()}} style={styles.button}>
-              <Text style={styles.buttonText}>Login</Text>
-            </TouchableOpacity>
-          </View>
+    return (
+      <View>
+        <View style={styles.container}>
+          <TouchableOpacity onPress={this.goLogin.bind(this)} style={styles.button}>
+            <Text style={styles.buttonText}>Login</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this.goRegis.bind(this)} style={styles.button}>
+            <Text style={styles.buttonText}>Register</Text>
+          </TouchableOpacity>
         </View>
-      );
-    }
+      </View>
+    );
   }
 };

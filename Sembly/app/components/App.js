@@ -10,6 +10,8 @@ import {
 var app;
 import TopBar from './TopBar.js';
 import LoginPage from './LoginPage.js';
+import LoginForm from './LoginForm.js';
+import RegisForm from './RegisForm.js';
 import Main from './Main.js';
 import Map from './Map.js';
 import Profile from './Profile.js';
@@ -36,7 +38,12 @@ export default class App extends Component {
     if(route.name === 'LoginPage'){
       return <LoginPage getLocation={app.getLocation.bind(app)} setUser={app.setUser.bind(app)} navigator={navigator}/>
     }
-
+    if(route.name === 'LoginForm'){
+      return <LoginForm getLocation={app.getLocation.bind(app)} setUser={app.setUser.bind(app)} navigator={navigator}/>
+    }
+    if(route.name === 'RegisForm'){
+      return <RegisForm getLocation={app.getLocation.bind(app)} setUser={app.setUser.bind(app)} navigator={navigator}/>
+    }
     if(route.name === 'Profile') {
       return <Profile user={app.state.user} navigator={navigator}/>
     }
