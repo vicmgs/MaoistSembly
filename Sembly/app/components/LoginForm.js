@@ -11,6 +11,7 @@ import {
 
 
 import Spinner from './Spinner.js'
+import Config from './Env.js';
 
 
 const styles = StyleSheet.create({
@@ -82,7 +83,7 @@ export default class LoginForm extends Component {
 
   login() {
     this.setState({loading: true});
-    fetch('http://localhost:3000/api/users/login',{
+    fetch(`${Config.API_URL}/api/users/login`,{
       method: 'POST',
       headers: { "Content-Type" : "application/json" },
       body: JSON.stringify({email: this.state.email, password: this.state.password})

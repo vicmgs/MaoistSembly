@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   TextInput
 } from 'react-native';
-
+import Config from './Env.js';
 
 import Spinner from './Spinner.js'
 
@@ -90,7 +90,7 @@ export default class RegisForm extends Component {
 
   register() {
    this.setState({loading: true});
-    fetch('http://localhost:3000/api/users/signup',{
+    fetch(`${Config.API_URL}/api/users/signup`,{
       method: 'POST',
       headers: { "Content-Type" : "application/json" },
       body: JSON.stringify({
