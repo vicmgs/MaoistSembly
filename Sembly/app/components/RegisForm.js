@@ -54,7 +54,15 @@ inputContainer: {
 export default class RegisForm extends Component {
   constructor(props){
     super(props);
-    this.state = {loading: false}
+    this.state = {
+      loading: false,
+      first: null,
+      last: null,
+      email: null,
+      password: null,
+      confirm: null,
+      photo: null
+    }
   }
 
   _navigate() {
@@ -67,21 +75,28 @@ export default class RegisForm extends Component {
     this.props.getLocation();
   }
 
-   register() {
-     this.setState({loading: true});
-      fetch('http://localhost:3000/api/users/login',{
-        method: 'POST',
-        headers: { "Content-Type" : "application/json" },
-        body: JSON.stringify({email: 'spencer@test.com', password: 'test'})
+  register() {
+   this.setState({loading: true});
+    fetch('http://localhost:3000/api/users/signup',{
+      method: 'POST',
+      headers: { "Content-Type" : "application/json" },
+      body: JSON.stringify({
+        firstName: this.state.first,
+        lastName: this.state.last,
+        email: this.state.email,
+        password: this.state.password,
+        confirm: this.state.confirm,
+        photoUrl: this.state.photo
       })
-      .then(response => {
-        return response.json();
-      })
-      .then( user => {
-        this.props.setUser(user);
-        this._navigate();
-      })
-    }
+    })
+    .then(response => {
+      return response.json();
+    })
+    .then( user => {
+      this.props.setUser(user);
+      this._navigate();
+    })
+  }
 
   render(){
     if (this.state.loading) {
@@ -95,16 +110,22 @@ export default class RegisForm extends Component {
               <TextInput
                 style={styles.searchInput}
                 placeholder='First name'
+                onChangeText={(text) => this.setState({first:text})}
+                autoCapitalize='none'
                 // onChange={this.onSearchTextChange.bind(this)}
                 />
               <TextInput
                 style={styles.searchInput}
                 placeholder='Last name'
+                onChangeText={(text) => this.setState({last:text})}
+                autoCapitalize='none'
                 // onChange={this.onSearchTextChange.bind(this)}
                 />
               <TextInput
                 style={styles.searchInput}
                 placeholder='Email'
+                onChangeText={(text) => this.setState({email:text})}
+                autoCapitalize='none'
                 // onChange={this.onSearchTextChange.bind(this)}
                 />
             </View>
@@ -113,17 +134,23 @@ export default class RegisForm extends Component {
                 style={styles.searchInput}
                 placeholder='Password'
                 secureTextEntry={true}
+                onChangeText={(text) => this.setState({password:text})}
+                autoCapitalize='none'
                 // onChange={this.onSearchTextChange.bind(this)}
                 />
               <TextInput
                 style={styles.searchInput}
                 placeholder='Confirm password'
                 secureTextEntry={true}
+                onChangeText={(text) => this.setState({confirm:text})}
+                autoCapitalize='none'
                 // onChange={this.onSearchTextChange.bind(this)}
                 />
               <TextInput
                 style={styles.searchInput}
                 placeholder='Photo'
+                onChangeText={(text) => this.setState({photo:text})}
+                autoCapitalize='none'
                 // onChange={this.onSearchTextChange.bind(this)}
                 />
             </View>
