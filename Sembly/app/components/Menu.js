@@ -18,7 +18,7 @@ export default class Menu extends Component {
     super(props);
   }
 
-        
+
 
   render(){
     return (
@@ -29,7 +29,7 @@ export default class Menu extends Component {
           </View>
           <Text style={styles.description}>
              {this.props.user ? this.props.user.firstName + ' ' + this.props.user.lastName : <Text></Text>}
-          </Text> 
+          </Text>
         </TouchableOpacity>
         <View style={styles.menuView}>
           <TouchableOpacity style={styles.flowRight} onPress={()=> {this.props._navigate('Profile')}} >
@@ -62,7 +62,13 @@ export default class Menu extends Component {
             	<Text style={styles.listElem}>Saved</Text>
             </View>
           </TouchableOpacity>
-        </View> 
+          <TouchableOpacity style={styles.flowRight} onPress={()=> {this.props._navigate('LoginForm')}} >
+            <Icon name='signout' style={styles.icon}></Icon>
+            <View style={styles.listTouchable}>
+            	<Text style={styles.listElem}>Log Out</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
       </View>
 
     );
@@ -110,8 +116,8 @@ const styles = StyleSheet.create({
   },
   image: {
     borderRadius: 50,
-    height: 100, 
-    width: 100, 
+    height: 100,
+    width: 100,
     marginRight:10,
     marginBottom: 20
   },
