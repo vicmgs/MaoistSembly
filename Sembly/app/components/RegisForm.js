@@ -84,10 +84,6 @@ export default class RegisForm extends Component {
     });
   }
 
-  componentWillMount () {
-    this.props.getLocation();
-  }
-
   register() {
    this.setState({loading: true});
     fetch(`${Config.API_URL}/api/users/signup`,{
@@ -107,6 +103,7 @@ export default class RegisForm extends Component {
     })
     .then( user => {
       this.props.setUser(user);
+      this.props.getLocation();
       this._navigate();
     })
     .catch(err => {
@@ -136,6 +133,7 @@ export default class RegisForm extends Component {
                 placeholder='First name'
                 onChangeText={(text) => this.setState({first:text})}
                 autoCapitalize='none'
+                autoCorrect={false}
                 // onChange={this.onSearchTextChange.bind(this)}
                 />
               <TextInput
@@ -143,6 +141,7 @@ export default class RegisForm extends Component {
                 placeholder='Last name'
                 onChangeText={(text) => this.setState({last:text})}
                 autoCapitalize='none'
+                autoCorrect={false}
                 // onChange={this.onSearchTextChange.bind(this)}
                 />
               <TextInput
@@ -150,6 +149,7 @@ export default class RegisForm extends Component {
                 placeholder='Email'
                 onChangeText={(text) => this.setState({email:text})}
                 autoCapitalize='none'
+                autoCorrect={false}
                 // onChange={this.onSearchTextChange.bind(this)}
                 />
             </View>
@@ -160,6 +160,7 @@ export default class RegisForm extends Component {
                 secureTextEntry={true}
                 onChangeText={(text) => this.setState({password:text})}
                 autoCapitalize='none'
+                autoCorrect={false}
                 // onChange={this.onSearchTextChange.bind(this)}
                 />
               <TextInput
@@ -168,6 +169,7 @@ export default class RegisForm extends Component {
                 secureTextEntry={true}
                 onChangeText={(text) => this.setState({confirm:text})}
                 autoCapitalize='none'
+                autoCorrect={false}
                 // onChange={this.onSearchTextChange.bind(this)}
                 />
               <TextInput
@@ -175,6 +177,7 @@ export default class RegisForm extends Component {
                 placeholder='Photo'
                 onChangeText={(text) => this.setState({photo:text})}
                 autoCapitalize='none'
+                autoCorrect={false}
                 // onChange={this.onSearchTextChange.bind(this)}
                 />
             </View>

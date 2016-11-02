@@ -77,10 +77,6 @@ export default class LoginForm extends Component {
     });
   }
 
-  componentWillMount () {
-    this.props.getLocation();
-  }
-
   login() {
     this.setState({loading: true});
     fetch(`${Config.API_URL}/api/users/login`,{
@@ -93,6 +89,7 @@ export default class LoginForm extends Component {
     })
     .then( user => {
       this.props.setUser(user);
+      this.props.getLocation();
       this._navigate();
     })
     .catch(err => {
@@ -122,6 +119,7 @@ export default class LoginForm extends Component {
                 placeholder='Enter email'
                 onChangeText={(text) => this.setState({email:text})}
                 autoCapitalize='none'
+                autoCorrect={false}
                 // onChange={this.onSearchTextChange.bind(this)}
                 />
               <TextInput
@@ -130,6 +128,7 @@ export default class LoginForm extends Component {
                 secureTextEntry={true}
                 onChangeText={(pwtext) => this.setState({password:pwtext})}
                 autoCapitalize='none'
+                autoCorrect={false}
                 // onChange={this.onSearchTextChange.bind(this)}
                 />
             </View>

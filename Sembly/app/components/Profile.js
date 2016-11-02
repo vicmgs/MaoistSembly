@@ -101,7 +101,7 @@ export default class Profile extends Component {
     this.state = {
       first: null,
       last: null,
-      email: null,
+      email: this.props.user.email,
       password: null,
       confirm: null,
       photo: null
@@ -125,6 +125,7 @@ export default class Profile extends Component {
               placeholder={this.props.user.firstName}
               onChangeText={(text) => this.setState({first:text})}
               autoCapitalize='none'
+              autoCorrect={false}
               // onChange={this.onSearchTextChange.bind(this)}
               />
             <TextInput
@@ -132,13 +133,7 @@ export default class Profile extends Component {
               placeholder={this.props.user.lastName}
               onChangeText={(text) => this.setState({last:text})}
               autoCapitalize='none'
-              // onChange={this.onSearchTextChange.bind(this)}
-              />
-            <TextInput
-              style={styles.searchInput}
-              placeholder={this.props.user.email}
-              onChangeText={(text) => this.setState({email:text})}
-              autoCapitalize='none'
+              autoCorrect={false}
               // onChange={this.onSearchTextChange.bind(this)}
               />
           </View>
@@ -149,6 +144,7 @@ export default class Profile extends Component {
               secureTextEntry={true}
               onChangeText={(text) => this.setState({password:text})}
               autoCapitalize='none'
+              autoCorrect={false}
               // onChange={this.onSearchTextChange.bind(this)}
               />
             <TextInput
@@ -157,6 +153,7 @@ export default class Profile extends Component {
               secureTextEntry={true}
               onChangeText={(text) => this.setState({confirm:text})}
               autoCapitalize='none'
+              autoCorrect={false}
               // onChange={this.onSearchTextChange.bind(this)}
               />
             <TextInput
@@ -164,6 +161,7 @@ export default class Profile extends Component {
               placeholder={this.props.user.photoUrl}
               onChangeText={(text) => this.setState({photo:text})}
               autoCapitalize='none'
+              autoCorrect={false}
               // onChange={this.onSearchTextChange.bind(this)}
               />
           </View>

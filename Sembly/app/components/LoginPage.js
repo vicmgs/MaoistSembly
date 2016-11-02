@@ -60,22 +60,6 @@ export default class LoginPage extends Component {
     });
   }
 
-  login() {
-    this.setState({loading: true});
-     fetch(`${Config.API_URL}/api/users/login`,{
-       method: 'POST',
-       headers: { "Content-Type" : "application/json" },
-       body: JSON.stringify({email: 'spencer@test.com', password: 'test'})
-     })
-     .then(response => {
-       return response.json();
-     })
-     .then( user => {
-       this.props.setUser(user);
-       this._navigate();
-     })
-   }
-
   render(){
     return (
       <View>
