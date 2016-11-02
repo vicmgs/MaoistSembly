@@ -28,10 +28,25 @@ export default class Map extends Component {
   }
 
   setNewEventPinCoords () {
-    this.setState({x: {
-      latitude: this.props.mongoLocation[1] + .0005,
-      longitude: this.props.mongoLocation[0] + .0005
-    } });
+    fetch(`${Config.API_URL}/api/users/update/loc`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        email: this.props.user.email,
+        location: [Number(this.props.mongoLocation[0]), Number(this.props.mongoLocation[1])]
+      })
+    })
+    .then(data => {
+      this.setState({x: {
+        latitude: this.props.mongoLocation[1],
+        longitude: this.props.mongoLocation[0]
+      } });
+    })
+    .catch((err) => {
+      console.log(err);
+    })
   }
 
   fetchEvents () {
