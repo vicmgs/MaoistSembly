@@ -61,12 +61,6 @@ export default class App extends Component {
     if(route.name === 'Feed') {
       return <Feed name={route.name} user={app.state.user} mongoLocation={app.state.mongoLocation} page={'bundle'} navigator={navigator}/>
     }
-    if(route.name === 'Invites') {
-      return <Feed name={'Invited To'} user={app.state.user} page={'invited'} navigator={navigator}/>
-    }
-    if(route.name === 'Saved') {
-      return <Feed name={route.name} user={app.state.user} page={'saved'} navigator={navigator}/>
-    }
   }
 
   configureScene(route, routeStack){

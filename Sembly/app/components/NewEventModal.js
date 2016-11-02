@@ -144,25 +144,6 @@ export default class NewEventModal extends Component {
             />
           </View>
 
-          <View style={styles.friendsCheckGroup}>
-            <Text>Invite your friends!</Text>
-            {this.state.friends.map((friend, index) => {
-              return (
-                <View style={styles.friendCheck} key={friend._id}>
-                  <MKCheckbox
-                    checked={false} ref={'friend' + index} friendCheckId={friend._id}
-                  />
-                  <Text>{friend.firstName + ' ' + friend.lastName}</Text>
-                </View>
-              )
-            })}
-          </View>
-
-          <View style={styles.visibilityCheck}>
-            <Text>Make your event invite only?</Text>
-            <MKCheckbox ref={'visibilityCheckbox'} checked={false}/>
-          </View>
-
           <View style={styles.createEventButtonContainer}>
             <MKButton
               style={styles.createEventButton}

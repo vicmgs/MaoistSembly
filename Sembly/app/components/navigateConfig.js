@@ -14,16 +14,6 @@ export default function _navigate(name){
         name: 'Feed'
       });
     }
-    if(name === 'Invites'){
-      this.props.navigator.resetTo({
-        name: 'Invites'
-      });
-    }
-    if(name === 'Saved'){
-      this.props.navigator.resetTo({
-        name: 'Saved'
-      });
-    }
     if(name === 'LoginForm'){
       this.props.navigator.resetTo({
         name: 'LoginForm'

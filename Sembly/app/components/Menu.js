@@ -47,19 +47,7 @@ export default class Menu extends Component {
           <TouchableOpacity style={styles.flowRight} onPress={()=> {this.props._navigate('Feed')}} >
             <Icon name='format-list-bulleted' style={styles.icon}></Icon>
             <View style={styles.listTouchable}>
-            	<Text style={styles.listElem}>Feed</Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.flowRight} onPress={()=> {this.props._navigate('Invites')}} >
-            <Icon name='mail' style={styles.icon}></Icon>
-            <View style={styles.listTouchable}>
-            	<Text style={styles.listElem}>Invites</Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.flowRight} onPress={()=> {this.props._navigate('Saved')}} >
-            <Icon name='archive' style={styles.icon}></Icon>
-            <View style={styles.listTouchable}>
-            	<Text style={styles.listElem}>Saved</Text>
+            	<Text style={styles.listElem}>Events</Text>
             </View>
           </TouchableOpacity>
           <TouchableOpacity style={styles.flowRight} onPress={()=> {this.props._navigate('LoginForm')}} >
