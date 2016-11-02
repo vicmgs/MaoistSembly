@@ -30,7 +30,7 @@ export default class Map extends Component {
     this.setState({x: {
       latitude: this.props.mongoLocation[1] + .0005,
       longitude: this.props.mongoLocation[0] + .0005
-    } })
+    } });
   }
 
   fetchEvents () {
@@ -48,7 +48,6 @@ export default class Map extends Component {
       return data.json()
     })
     .then(data => {
-      console.log('inside fetchEvents', data);
       this.setState({markers: data, loading: false})
     })
     .catch((err) => {
