@@ -15,6 +15,7 @@ import NewEventModal from './NewEventModal.js';
 import OurDrawer from './OurDrawer.js';
 import _navigate from './navigateConfig.js';
 import NewEventFab from './NewEventFab.js';
+import Config from './Env.js';
 
 export default class Map extends Component {
   constructor (props) {
@@ -34,7 +35,7 @@ export default class Map extends Component {
   }
 
   fetchEvents () {
-    fetch('http://localhost:3000/api/events/bundle', {
+    fetch(`${Config.API_URL}/api/events/bundle`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

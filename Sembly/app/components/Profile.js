@@ -21,6 +21,7 @@ import Menu from './Menu.js';
 import UserCard from './UserCard.js';
 
 import _navigate from './navigateConfig.js';
+import Config from './Env.js';
 
 var styles = StyleSheet.create({
   description: {
@@ -115,7 +116,7 @@ export default class Profile extends Component {
 
   searchUsers(search){
     var search = search || '';
-    fetch('http://localhost:3000/api/users/'+ search,{
+    fetch(`${Config.API_URL}/api/users/` + search,{
       method: 'GET',
       headers: { "Content-Type" : "application/json" }
       // body: JSON.stringify({userId: this.props.user._id, search: search})
@@ -139,7 +140,7 @@ export default class Profile extends Component {
   //the new version in the database
   //set new user each time a change is done?
   getNewRequests(context){
-     fetch('http://localhost:3000/api/friends/getRequests',{
+     fetch(`${Config.API_URL}/api/friends/getRequests`,{
        method: 'POST',
        headers: { "Content-Type" : "application/json" },
        body: JSON.stringify({userId: this.props.user._id})
@@ -159,7 +160,7 @@ export default class Profile extends Component {
 
   getFriends(search){
     var search = search || '';
-    fetch('http://localhost:3000/api/friends/getFriends',{
+    fetch(`${Config.API_URL}/api/friends/getFriends`,{
       method: 'POST',
       headers: { "Content-Type" : "application/json" },
       body: JSON.stringify({userId: this.props.user._id, search: search})

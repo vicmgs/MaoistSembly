@@ -22,6 +22,7 @@ import Menu from './Menu.js';
 import EventCard from './EventCard';
 
 import _navigate from './navigateConfig.js';
+import Config from './Env.js';
 
 
 export default class Feed extends Component {
@@ -53,7 +54,7 @@ export default class Feed extends Component {
     this.setState({addEventModal: true, eventModal:false});
   }
   getInvited() {
-    fetch('http://localhost:3000/api/events/invited',{
+    fetch(`${Config.API_URL}/api/events/invited`,{
       method: 'POST',
       headers: { "Content-Type" : "application/json" },
       body: JSON.stringify({userId: this.props.user._id})
@@ -69,7 +70,7 @@ export default class Feed extends Component {
     });
   }
   getSaved() {
-    fetch('http://localhost:3000/api/events/saved',{
+    fetch(`${Config.API_URL}/api/events/saved`,{
       method: 'POST',
       headers: { "Content-Type" : "application/json" },
       body: JSON.stringify({userId: this.props.user._id})
@@ -85,7 +86,7 @@ export default class Feed extends Component {
     });
   }
   getBundle() {
-    fetch('http://localhost:3000/api/events/bundle',{
+    fetch(`${Config.API_URL}/api/events/bundle`,{
       method: 'POST',
       headers: { "Content-Type" : "application/json" },
       body: JSON.stringify({userId: this.props.user._id, location: this.props.mongoLocation})

@@ -6,10 +6,11 @@ var eventModels = require('./server/models/eventModels');
 var friendModels = require('./server/models/friendModels');
 mongoose.Promise = require('bluebird');
 
-if (!process.env.MONGODB_URI) {
- mongoose.connect('mongodb://localhost/sembly'); 
+if (process.env.MONGODB_URI) {
+  mongoose.connect(process.env.MONGODB_URI.toString());
+} else {
+  mongoose.connect('mongodb://localhost/sembly');
 }
-    
 
 //DATA
 var users = [
@@ -82,7 +83,7 @@ var events = [
     tags:['concert', 'music'],
     image: 'http://www.ticketswest.com/media/1028/concert_Featured%20Event%20Tile.jpg'
   }
-  
+
 ];
 
 mongoose.connection.on('connected', () => {
@@ -112,16 +113,14 @@ mongoose.connection.on('connected', () => {
     return eventModels.saveEvent(event._id, users[0]._id)
   })
   .then( success => {
-    return Promise.all([friendModels.addFriend(users[0]._id, users[2]._id), friendModels.addFriend(users[1]._id, users[0]._id), friendModels.addFriend(users[0]._id, users[3]._id)]) 
+    return Promise.all([friendModels.addFriend(users[0]._id, users[2]._id), friendModels.addFriend(users[1]._id, users[0]._id), friendModels.addFriend(users[0]._id, users[3]._id)])
   })
   .then( success => {
     return Promise.all([friendModels.acceptFriend(users[2]._id, users[0]._id), friendModels.acceptFriend(users[3]._id, users[0]._id)])
   })
   .then( success => {
     console.log('Database populated');
-    if (!process.env.MONGODB_URI) {
       process.exit();
-    }
   })
   .catch(error => {
     console.log(error);
