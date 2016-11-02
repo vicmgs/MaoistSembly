@@ -19,4 +19,9 @@ export default function _navigate(name){
         name: 'LoginForm'
       });
     }
+    if(name === 'Friends'){
+      this.props.navigator.resetTo({
+        name: 'Friends'
+      });
+    }
 };
