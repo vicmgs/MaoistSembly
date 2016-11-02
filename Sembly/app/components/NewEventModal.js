@@ -13,6 +13,7 @@ import {
 import Modal from 'react-native-modalbox';
 import { MKCheckbox, MKButton } from 'react-native-material-kit'
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import Config from './Env.js';
 
 export default class NewEventModal extends Component {
   constructor (props) {
@@ -27,7 +28,7 @@ export default class NewEventModal extends Component {
   }
 
   componentWillMount () {
-    fetch('http://localhost:3000/api/friends/getFriends',{
+    fetch(`${Config.API_URL}/api/friends/getFriends`,{
       method: 'POST',
       headers: { "Content-Type" : "application/json" },
       body: JSON.stringify({userId: this.props.userId, search: ''})
@@ -79,7 +80,7 @@ export default class NewEventModal extends Component {
       }
     })
 
-    fetch('http://localhost:3000/api/events',{
+    fetch(`${Config.API_URL}/api/events`,{
       method: 'POST',
       headers: { "Content-Type" : "application/json" },
       body: JSON.stringify(eventToBePosted)
