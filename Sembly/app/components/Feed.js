@@ -50,41 +50,6 @@ export default class Feed extends Component {
   closeEvent () {
     this.setState({eventModal:false});
   }
-  openModal () {
-    this.setState({addEventModal: true, eventModal:false});
-  }
-  getInvited() {
-    fetch(`${Config.API_URL}/api/events/invited`,{
-      method: 'POST',
-      headers: { "Content-Type" : "application/json" },
-      body: JSON.stringify({userId: this.props.user._id})
-    })
-    .then(response => {
-      return response.json();
-    })
-    .then( events => {
-      this.setState({events: events, loading: false});
-    })
-    .catch( error => {
-      console.log(error);
-    });
-  }
-  getSaved() {
-    fetch(`${Config.API_URL}/api/events/saved`,{
-      method: 'POST',
-      headers: { "Content-Type" : "application/json" },
-      body: JSON.stringify({userId: this.props.user._id})
-    })
-    .then(response => {
-      return response.json();
-    })
-    .then( events => {
-      this.setState({events: events, loading: false});
-    })
-    .catch( error => {
-      console.log(error);
-    });
-  }
   getBundle() {
     fetch(`${Config.API_URL}/api/events/bundle`,{
       method: 'POST',
@@ -132,7 +97,6 @@ export default class Feed extends Component {
           }
         }/>
         {this.getModal()}
-        <NewEventModal visibility={this.state.addEventModal}/>
       </OurDrawer>
     )
   }

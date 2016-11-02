@@ -119,11 +119,7 @@ export default class EventModal extends Component {
     this.state = {
     	visible: false,
     	loading: true,
-    	button: styles.button,
-    	selected: styles.selected,
-    	invitedStyle: styles.selected,
-    	savedStyle: styles.button,
-    	checkedStyle: styles.button
+    	button: styles.button
     };
   }
   componentWillMount() {
@@ -161,71 +157,13 @@ export default class EventModal extends Component {
       return response.json();
     })
     .then( event => {
-      this.setState({event: event, loading: false, users: event.invitedUsers});
+      this.setState({event: event, loading: false});
     })
     .catch( error => {
       console.log(error);
     });
   }
-  changeUsers(type) {
-  	if (type === 'invited') {
-  		this.setState({
-  			users: this.state.event.invitedUsers,
-  			savedStyle: this.state.button,
-  			invitedStyle: this.state.selected,
-  			checkedStyle: this.state.button
-  		})
-  	} else if (type === 'saved') {
-  		this.setState({
-  			users: this.state.event.savedUsers,
-  			savedStyle: this.state.selected,
-  			invitedStyle: this.state.button,
-  			checkedStyle: this.state.button})
-  	} else {
-  		this.setState({
-  			users: this.state.event.checkedInUsers,
-  			savedStyle: this.state.button,
-  			invitedStyle: this.state.button,
-  			checkedStyle: this.state.selected})
-  	}
-  }
-  saveEvent() {
-  	fetch(`${Config.API_URL}/api/events/saveEvent`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        userId: this.props.user._id,
-        eventId: this.state.event._id
-      })
-    })
-    .then(data => {
-      this.getEvent();
-    });
-  }
-  checkIn() {
-  	fetch(`${Config.API_URL}/api/events/checkIn`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        userId: this.props.user._id,
-        eventId: this.state.event._id
-      })
-    })
-    .then(data => {
-      this.getEvent();
-    });
-  }
-  getUsers() {
-  	if (this.state.users.length === 0) {
-  		return (<Text>No Users</Text>)
-  	} else {
-  		return this.state.users.map((user, index) => <UserCard key={index} user={user} index={index} friends={'users'} />);
-  	}
-  }
+
   getRender () {
   	if (this.state.loading === true) {
   		this.getEvent();
@@ -240,17 +178,8 @@ export default class EventModal extends Component {
   				<View>
   				  <Text style={styles.description}>{this.transformDate(this.state.event.startTime)}</Text>
   				</View>
-  				<View style={styles.flowRight}>
-  					<TouchableOpacity style={styles.actionButton} onPress={e => this.saveEvent()}><Text style={styles.buttonText}>Save Event!</Text></TouchableOpacity>
-  					<TouchableOpacity style={styles.actionButton} onPress={e => this.checkIn()}><Text style={styles.buttonText}>Check In!</Text></TouchableOpacity>
-  				</View>
-  				<View style={styles.flowRight}>
-  					<TouchableOpacity style={this.state.invitedStyle} onPress={e => this.changeUsers('invited')}><Text style={styles.buttonText}>Invited</Text></TouchableOpacity>
-  					<TouchableOpacity style={this.state.savedStyle} onPress={e => this.changeUsers('saved')}><Text style={styles.buttonText}>Saved</Text></TouchableOpacity>
-  					<TouchableOpacity style={this.state.checkedStyle} onPress={e => this.changeUsers('checkedin')}><Text style={styles.buttonText}>Checked In</Text></TouchableOpacity>
-  				</View>
   				<ScrollView>
-  				{this.getUsers()}
+  				
   				</ScrollView>
   			</View>
   			)

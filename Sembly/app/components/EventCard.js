@@ -43,7 +43,6 @@ export default class EventCard extends Component {
 
   render () {
     var time;
-    var stats = this.props.event.invitedUsers.length + ' Users invited  ' + this.props.event.savedUsers.length + ' Users Saved  ' + this.props.event.checkedInUsers.length + ' Users Checked In';
     if (this.props.event.startTime - Date.now() < 0) {
       time = this.props.event.endTime
     } else {
@@ -65,7 +64,6 @@ export default class EventCard extends Component {
           <View style={styles.text}>
             <Text style={styles.title}>{this.props.event.name}</Text>
             <Text style={styles.instructions}>{time.toString()}</Text>
-            <Text style={styles.stats}>{stats}</Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -90,8 +88,8 @@ const styles = StyleSheet.create({
   },
   image: {
     borderRadius:3,
-    height:55, 
-    width:55, 
+    height:55,
+    width:55,
     marginRight:10
   }
 });

@@ -60,25 +60,13 @@ export default class NewEventModal extends Component {
       image: 'http://blogs-images.forbes.com/steveolenski/files/2015/07/Messe_Luzern_Corporate_Event.jpg',
       tags: [],
       invitedUsers: [],
-      visibility: ''
+      visibility: 'public'
     }
 
     eventToBePosted.location[0] = this.props.eventCoords.longitude;
     eventToBePosted.location[1] = this.props.eventCoords.latitude;
 
-    if(this.refs.visibilityCheckbox.state.checked) {
-      eventToBePosted.visibility = 'invite'
-    } else {
-      eventToBePosted.visibility = 'public'
-    }
-
     eventToBePosted.tags = this.state.newEventTags.split(' ');
-
-    this.state.friends.forEach((friend, index) => {
-      if(this.refs['friend' + index].state.checked){
-        eventToBePosted.invitedUsers.push(this.refs['friend' + index].props.friendCheckId)
-      }
-    })
 
     fetch(`${Config.API_URL}/api/events`,{
       method: 'POST',
@@ -144,25 +132,6 @@ export default class NewEventModal extends Component {
             />
           </View>
 
-          <View style={styles.friendsCheckGroup}>
-            <Text>Invite your friends!</Text>
-            {this.state.friends.map((friend, index) => {
-              return (
-                <View style={styles.friendCheck} key={friend._id}>
-                  <MKCheckbox
-                    checked={false} ref={'friend' + index} friendCheckId={friend._id}
-                  />
-                  <Text>{friend.firstName + ' ' + friend.lastName}</Text>
-                </View>
-              )
-            })}
-          </View>
-
-          <View style={styles.visibilityCheck}>
-            <Text>Make your event invite only?</Text>
-            <MKCheckbox ref={'visibilityCheckbox'} checked={false}/>
-          </View>
-
           <View style={styles.createEventButtonContainer}>
             <MKButton
               style={styles.createEventButton}
@@ -207,10 +176,12 @@ const styles = StyleSheet.create({
   },
   headerContainer:{
     flexDirection: 'row',
+    margin: 20,
     justifyContent: 'center'
   },
   header: {
     fontSize: 24,
+    color: 'grey',
     fontWeight: 'bold'
   },
   textInputContainer: {
@@ -257,6 +228,7 @@ const styles = StyleSheet.create({
   createEventButtonContainer: {
     alignItems: 'center',
     flexDirection: 'row',
+    margin: 20,
     justifyContent: 'center'
   },
   createEventButton: {

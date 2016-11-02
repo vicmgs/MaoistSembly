@@ -74,7 +74,7 @@ export default class Map extends Component {
     }
     else {
       return (
-        <OurDrawer user={this.props.user} topBarFilterVisible={true} topBarName={'Map'} _navigate={ _navigate.bind(this)}>
+        <OurDrawer user={this.props.user} topBarFilterVisible={false} topBarName={'Map'} _navigate={ _navigate.bind(this)}>
           <View>
             <MapView
               showsUserLocation={true}
