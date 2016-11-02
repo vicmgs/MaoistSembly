@@ -32,23 +32,29 @@ export default class Menu extends Component {
           </Text>
         </TouchableOpacity>
         <View style={styles.menuView}>
+          <TouchableOpacity style={styles.flowRight} onPress={()=> {this.props._navigate('Map')}} >
+            <Icon name='location-on' style={styles.icon}></Icon>
+            <View style={styles.listTouchable}>
+              <Text style={styles.listElem}>Map</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.flowRight} onPress={()=> {this.props._navigate('Feed')}} >
+            <Icon name='event' style={styles.icon}></Icon>
+            <View style={styles.listTouchable}>
+            	<Text style={styles.listElem}>Events</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.flowRight} onPress={()=> {this.props._navigate('Friends')}} >
+              <Icon name='person-add' style={styles.icon}></Icon>
+              <View style={styles.listTouchable}>
+              	<Text style={styles.listElem}>Friends</Text>
+              </View>
+          </TouchableOpacity>
           <TouchableOpacity style={styles.flowRight} onPress={()=> {this.props._navigate('Profile')}} >
               <Icon name='account-circle' style={styles.icon}></Icon>
               <View style={styles.listTouchable}>
               	<Text style={styles.listElem}>Profile</Text>
               </View>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.flowRight} onPress={()=> {this.props._navigate('Map')}} >
-            <Icon name='location-on' style={styles.icon}></Icon>
-        		<View style={styles.listTouchable}>
-            	<Text style={styles.listElem}>Map</Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.flowRight} onPress={()=> {this.props._navigate('Feed')}} >
-            <Icon name='format-list-bulleted' style={styles.icon}></Icon>
-            <View style={styles.listTouchable}>
-            	<Text style={styles.listElem}>Events</Text>
-            </View>
           </TouchableOpacity>
           <TouchableOpacity style={styles.flowRight} onPress={()=> {this.props._navigate('LoginForm')}} >
             <Icon name='reply' style={styles.icon}></Icon>

@@ -24,6 +24,7 @@ import Main from './Main.js';
 import Map from './Map.js';
 import Profile from './Profile.js';
 import Feed from './Feed.js';
+import Friends from './Friends.js';
 
 export default class App extends Component {
   constructor(props) {
@@ -60,6 +61,9 @@ export default class App extends Component {
     }
     if(route.name === 'Feed') {
       return <Feed name={route.name} user={app.state.user} mongoLocation={app.state.mongoLocation} page={'bundle'} navigator={navigator}/>
+    }
+    if(route.name === 'Friends') {
+      return <Friends user={app.state.user} navigator={navigator}/>
     }
   }
 

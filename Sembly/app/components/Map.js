@@ -101,7 +101,7 @@ export default class Map extends Component {
                   key={marker._id}
                   coordinate={tempLoc}
                   title={marker.name}
-                  pinColor='blue'
+                  pinColor='red'
                 />
               )
             })}
