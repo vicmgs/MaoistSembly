@@ -4,9 +4,9 @@
 
 ## Team
 
-  - __Product Owner__: Omar Mohamed
-  - __Scrum Master__: Spencer Lopez
-  - __Development Team Members__: Carlos Flores
+  - __Product Owner__: Aleks Basalilov
+  - __Scrum Master__: Vorofin layanto
+  - __Development Team Members__: Victor Mu, David Malpica
 
 ## Table of Contents
 
@@ -76,10 +76,10 @@ From the Sembly directory in one terminal:
 npm start
 ```
 
-and in another terminal: 
+and in another terminal (in Sembly : 
 
 ```sh
-npm run build
+npm run build-ios or npm run build-droid
 ```
 
 ### Roadmap
