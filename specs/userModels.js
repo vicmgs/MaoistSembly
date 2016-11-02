@@ -79,4 +79,44 @@ describe('User Models', function() {
     });
   });
 
+  describe('User\'s location', (done) => {
+    it('should have no default location', (done) => {
+      userModels.userSearch('test')
+      .then((users) => {
+        expect(users[0].location).is.undefined;
+        done();
+      });
+    });
+
+    it('should reflect the user location after update location', (done) => {
+      var location = [ 37.0031, 34.2223 ];
+      userModels.userSearch('test')
+      .then((users) => {
+        var user = users[0];
+        userModels.updateLocation(user.email, location)
+        .then((user) => {
+          expect(user.location[0]).to.equal(37.0031);
+          expect(user.location[1]).to.equal(34.2223);
+          done();
+        });
+      });
+    });
+
+    it('should have no location after no location assigned', (done) => {
+      var location = [ 110.011, -19.2233 ];
+      userModels.userSearch('test')
+      .then((users) => {
+        var user = users[0];
+        userModels.updateLocation(user.email, location)
+        .then((user) => {
+          userModels.updateLocation(user.email)
+          .then(function(updatedUser) {
+            expect(updatedUser.location).to.undefined;
+            done();
+          });
+        });
+      });
+    });
+  });
+
 });

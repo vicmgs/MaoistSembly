@@ -9,13 +9,13 @@ mongoose.Promise = bluebird;
 describe('User Schema', function() {
 
   describe('User Schema', function() {
-    it('schema should have properties id, firstName, lastName, email, password, salt, friends, requests, saved, hosting, invitedTo photoUrl', function() {
-      expect(User.schema.obj).to.have.all.keys(['id', 'firstName', 'lastName', 'email', 'password', 'salt', 'friends', 'requests','invitedTo', 'saved', 'hosting', 'photoUrl']);
+    it('schema should have properties id, firstName, lastName, email, password, salt, friends, requests, saved, hosting, invitedTo, photoUrl, location', function() {
+      expect(User.schema.obj).to.have.all.keys(['id', 'firstName', 'lastName', 'email', 'password', 'salt', 'friends', 'requests','invitedTo', 'saved', 'hosting', 'photoUrl', 'location']);
     });
   });
 
   describe('Password Encryption', function(){
-    
+
     var currentUser = null;
 
     afterEach(function(done){
@@ -54,7 +54,7 @@ describe('User Schema', function() {
 
       newTestUser.save()
       .then(function(newUser){
-        return newUser.comparePasswords(stringPassword); 
+        return newUser.comparePasswords(stringPassword);
       })
       .then(function(match){
         expect(match).to.equal(true);
