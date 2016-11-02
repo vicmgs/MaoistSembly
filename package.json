@@ -5,7 +5,7 @@
   "main": "server/server.js",
   "scripts": {
     "test": "mocha ./specs",
-    "runDev": "node server/server.js production",
+    "serverDev": "node server/server.js dev",
     "start": "MONGODB_URI='mongodb://dbuser:dbuser@ds027318.mlab.com:27318/heroku_zdm2dm12' PRODUCTION=true node server/server.js",
     "populate": "node testData.js",
     "populateProd": "MONGODB_URI='mongodb://dbuser:dbuser@ds027318.mlab.com:27318/heroku_zdm2dm12' node testData.js"

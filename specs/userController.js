@@ -94,4 +94,32 @@ describe('User Controller', function() {
       expect(userModels.userSearch.calledOnce).to.equal(true);
     });
   });
+
+  describe('User\'s location', () => {
+    it('should return a 200 after call API url', (done) => {
+      var location = [ 112.3343, 44.2222 ];
+
+      request(app)
+        .post('/api/users/update/loc')
+        .send({ email: testUser.email, location: location })
+        .expect(200)
+        .expect((res) => {
+          expect(res.body[0]).to.equal(location[0]);
+          expect(res.body[1]).to.equal(location[1]);
+        })
+        .end(done);
+    });
+
+    it('should update reset the user\'s location', (done) => {
+      request(app)
+        .post('/api/users/update/loc')
+        .send({ email: testUser.email, location: [] })
+        .expect(200)
+        .expect((res) => {
+          expect(res.body[0]).to.undefined;
+          expect(res.body[1]).to.undefined;
+        })
+        .end(done);
+    });
+  });
 });

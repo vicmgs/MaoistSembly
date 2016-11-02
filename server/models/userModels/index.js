@@ -1,5 +1,6 @@
 module.exports = {
 	addUser: require('./addUser'),
 	logIn: require('./logIn'),
-	userSearch: require('./userSearch')
+	userSearch: require('./userSearch'),
+	updateLocation: require('./updateLocation')
 }

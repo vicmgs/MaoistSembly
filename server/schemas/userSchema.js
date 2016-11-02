@@ -29,9 +29,11 @@ var UserSchema = new Schema({
   saved: [{type: Schema.Types.ObjectId, ref:'Event'}],
   hosting: [{ type: Schema.Types.ObjectId, ref:'Event'}],
   invitedTo: [{ type: Schema.Types.ObjectId, ref:'Event'}],
-  photoUrl: String
-
-
+  photoUrl: String,
+  location: {
+    type: [Number],
+    index: '2dsphere'
+  }
 });
 
 UserSchema.methods.comparePasswords = function (candidatePassword) {
@@ -73,6 +75,8 @@ UserSchema.pre('save', function (next) {
       next();
     });
   });
+
+
 });
 
 module.exports = mongoose.model('User', UserSchema);

@@ -8,6 +8,7 @@ module.exports = function (app, express) {
   app.post('/api/users/signup', userController.signUp);
   app.get('/api/users/signedin', userController.checkAuth);
   app.put('/api/users/update', userController.updateUser);
+  app.post('/api/users/update/loc', userController.updateLocation);
   app.get('/api/users/:search', userController.getUsers);
 
   //Handle Friend actions

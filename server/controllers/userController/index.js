@@ -3,5 +3,6 @@ module.exports = {
 	signUp: require('./signUp'),
 	checkAuth: require('./checkAuth'),
 	updateUser: require('./updateUser'),
-	getUsers: require('./getUsers')
+	getUsers: require('./getUsers'),
+	updateLocation: require('./updateLocation')
 }
