@@ -19,8 +19,8 @@ export default class TopBar extends Component {
           <Icon name='menu' style={styles.content}></Icon>
         </TouchableOpacity>
         <Text style={styles.logo}>{this.props.topBarName ? this.props.topBarName : 'Sembly'}</Text>
-        <TouchableOpacity>
-          <Text></Text>
+        <TouchableOpacity onPress={()=> {this.props._navigate('Map')}}>
+          <Icon name='cached' style={styles.content}></Icon>
         </TouchableOpacity>
       </View>
     )
