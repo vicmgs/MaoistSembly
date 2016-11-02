@@ -23,15 +23,31 @@ export default class Map extends Component {
     this.state = {
       loading: true,
       markers: null,
+      friends: null,
       modalVisible: false,
     };
   }
 
   setNewEventPinCoords () {
-    this.setState({x: {
-      latitude: this.props.mongoLocation[1] + .0005,
-      longitude: this.props.mongoLocation[0] + .0005
-    } });
+    fetch(`${Config.API_URL}/api/users/update/loc`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        email: this.props.user.email,
+        location: [Number(this.props.mongoLocation[0]), Number(this.props.mongoLocation[1])]
+      })
+    })
+    .then(data => {
+      this.setState({x: {
+        latitude: this.props.mongoLocation[1],
+        longitude: this.props.mongoLocation[0]
+      } });
+    })
+    .catch((err) => {
+      console.log(err);
+    })
   }
 
   fetchEvents () {
@@ -55,8 +71,28 @@ export default class Map extends Component {
       console.log(err);
     })
   }
+
+  getFriends(){
+    fetch(`${Config.API_URL}/api/friends/getFriends`,{
+      method: 'POST',
+      headers: { "Content-Type" : "application/json" },
+      body: JSON.stringify({userId: this.props.user._id, search: ''})
+    })
+    .then(response => {
+      return response.json();
+    })
+    .then( friends => {
+      this.setState({
+        friends: friends
+      });
+    })
+    .catch( error => {
+      console.log(error);
+    });
+  }
   componentWillMount () {
     this.setNewEventPinCoords();
+    this.getFriends();
     this.fetchEvents();
   }
   openModal () {
@@ -102,6 +138,20 @@ export default class Map extends Component {
                   coordinate={tempLoc}
                   title={marker.name}
                   pinColor='red'
+                />
+              )
+            })}
+            {this.state.friends.map(friend => {
+              var tempLoc = {
+                latitude: friend.location[1] + Math.random()*0.01,
+                longitude: friend.location[0] + Math.random()*0.01
+              }
+              return (
+                <MapView.Marker
+                  key={friend._id}
+                  coordinate={tempLoc}
+                  title={friend.firstName + ' ' + friend.lastName}
+                  pinColor='green'
                 />
               )
             })}
