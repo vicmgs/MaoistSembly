@@ -18,17 +18,18 @@ export default class Menu extends Component {
     super(props);
   }
 
-
-
   render(){
     return (
       <View style={styles.outer}>
-        <TouchableOpacity onPress={()=> {this.props._navigate('Profile')}} >
+        <TouchableOpacity>
           <View style={styles.imageView}>
               { this.props.user ? <Image style={styles.image} source={{uri: this.props.user.photoUrl}}/> : <Text></Text>}
           </View>
           <Text style={styles.description}>
              {this.props.user ? this.props.user.firstName + ' ' + this.props.user.lastName : <Text></Text>}
+          </Text>
+          <Text style={styles.description}>
+             {this.props.user ? this.props.user.email : <Text></Text>}
           </Text>
         </TouchableOpacity>
         <View style={styles.menuView}>
