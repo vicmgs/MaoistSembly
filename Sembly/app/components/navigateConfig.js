@@ -24,4 +24,9 @@ export default function _navigate(name){
         name: 'Saved'
       });
     }
+    if(name === 'LoginForm'){
+      this.props.navigator.resetTo({
+        name: 'LoginForm'
+      });
+    }
 };
