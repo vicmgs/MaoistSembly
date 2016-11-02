@@ -34,7 +34,7 @@ export default class OurDrawer extends Component{
         tweenHandler={(ratio) => ({
                 main: { opacity:(2-ratio)/2 }
         })}>
-         <TopBar topBarName={this.props.topBarName} topBarFilterVisible={this.props.topBarFilterVisible} openDrawer={() => {this._drawer.open()} }/>
+         <TopBar topBarName={this.props.topBarName} _navigate={this.props._navigate} topBarFilterVisible={this.props.topBarFilterVisible} openDrawer={() => {this._drawer.open()} }/>
        	{this.props.children}
       </Drawer>
     );
@@ -44,9 +44,9 @@ export default class OurDrawer extends Component{
 
 const drawerStyles = {
   drawer: {
-  backgroundColor: 'white', 
-  shadowColor: '#000000', 
-  shadowOpacity: 0.8, 
+  backgroundColor: 'white',
+  shadowColor: '#000000',
+  shadowOpacity: 0.8,
   shadowRadius: 3,
   }
 }
