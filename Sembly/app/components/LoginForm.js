@@ -35,6 +35,19 @@ button: {
   alignSelf: 'stretch',
   justifyContent: 'center'
 },
+buttonText2: {
+  fontSize: 20,
+  fontWeight: 'bold',
+  color: '#F44336',
+  alignSelf: 'center'
+},
+button2: {
+  height: 36,
+  flex: 1,
+  marginBottom: 10,
+  alignSelf: 'stretch',
+  justifyContent: 'center'
+},
 searchInput: {
   height: 36,
   flex: 4,
@@ -83,6 +96,12 @@ export default class LoginForm extends Component {
     })
   }
 
+  change() {
+    this.props.navigator.push({
+        name: 'RegisForm'
+    });
+  }
+
   render(){
     if (this.state.loading) {
       return (<View style={styles.container}><Spinner/></View>)
@@ -110,6 +129,9 @@ export default class LoginForm extends Component {
             </View>
             <TouchableOpacity onPress={(e)=>{this.login()}} style={styles.button}>
               <Text style={styles.buttonText}>Login</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={(e)=>{this.change()}} style={styles.button2}>
+              <Text style={styles.buttonText2}>Go to Sign Up</Text>
             </TouchableOpacity>
           </View>
         </View>
