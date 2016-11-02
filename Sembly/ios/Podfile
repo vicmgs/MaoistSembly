@@ -2,10 +2,11 @@ source 'https://github.com/CocoaPods/Specs.git'
 
 platform :ios, '8.0'
 use_frameworks!
+pod "HockeySDK"
 
 
 target 'Sembly' do
-  pod 'RNVectorIcons', :path => 'node_modules/react-native-vector-icons'
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
   
   pod 'React', path: '../node_modules/react-native', :subspecs => [
     'Core',
