@@ -47,7 +47,7 @@ export default class App extends Component {
       return <LoginPage navigator={navigator}/>
     }
     if(route.name === 'LoginForm'){
-      return <LoginForm getLocation={app.getLocation.bind(app)} setUser={app.setUser.bind(app)} navigator={navigator}/>
+      return <LoginForm getLocation={app.getLocation.bind(app)} setUser={app.setUser.bind(app)} warn={route.err} navigator={navigator}/>
     }
     if(route.name === 'RegisForm'){
       return <RegisForm getLocation={app.getLocation.bind(app)} setUser={app.setUser.bind(app)} navigator={navigator}/>

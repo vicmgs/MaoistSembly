@@ -13,7 +13,7 @@ module.exports = (email, password) => {
 		if (!user) {
 			return new Promise((resolve,reject) => {
 				resolve('User does not exist');
-			}) 
+			})
 		}
 		thisUser = user;
 		return user.comparePasswords(password);

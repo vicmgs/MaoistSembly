@@ -109,6 +109,11 @@ export default class RegisForm extends Component {
       this.props.setUser(user);
       this._navigate();
     })
+    .catch(err => {
+      this.props.navigator.push({
+          name: 'RegisForm'
+      });
+    })
   }
 
   change() {
