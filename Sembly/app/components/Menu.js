@@ -63,7 +63,7 @@ export default class Menu extends Component {
             </View>
           </TouchableOpacity>
           <TouchableOpacity style={styles.flowRight} onPress={()=> {this.props._navigate('LoginForm')}} >
-            <Icon name='signout' style={styles.icon}></Icon>
+            <Icon name='reply' style={styles.icon}></Icon>
             <View style={styles.listTouchable}>
             	<Text style={styles.listElem}>Log Out</Text>
             </View>

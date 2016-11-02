@@ -37,7 +37,7 @@ const ColoredFab = MKButton.coloredFab()
   .withStyle(styles.fab)
   .withText('+')
   .withTextStyle(styles.buttonText)
-  .withBackgroundColor(MKColor.Indigo)
+  .withBackgroundColor(MKColor.Red)
   .build();
 
 module.exports = ColoredFab
