@@ -8,7 +8,8 @@ import {
   Image,
   Dimensions,
   TouchableOpacity,
-  ScrollView
+  ScrollView,
+  TextInput
 } from 'react-native';
 
 import Spinner from './Spinner.js';
@@ -179,7 +180,6 @@ export default class EventModal extends Component {
   				  <Text style={styles.description}>{this.transformDate(this.state.event.startTime)}</Text>
   				</View>
   				<ScrollView>
-  				
   				</ScrollView>
   			</View>
   			)

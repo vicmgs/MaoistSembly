@@ -31,7 +31,7 @@ var styles = StyleSheet.create({
     color: '#656565'
   },
   container: {
-    padding: 10,
+    padding: 30,
     marginTop: 10,
     alignItems: 'center',
   },
@@ -69,7 +69,6 @@ var styles = StyleSheet.create({
     justifyContent: 'center',
   },
   inputContainer: {
-    flexDirection: 'row',
     alignItems: 'center',
     alignSelf: 'stretch',
     margin: 10,
@@ -100,7 +99,19 @@ export default class Profile extends Component {
   constructor(props){
     super(props);
     this.state = {
+      first: null,
+      last: null,
+      email: null,
+      password: null,
+      confirm: null,
+      photo: null
     };
+  }
+
+  update() {
+    alert(this.state.first);
+    alert(this.state.photo);
+
   }
 
   render(){
@@ -108,12 +119,57 @@ export default class Profile extends Component {
       <OurDrawer user={this.props.user} topBarName={'Profile'} _navigate={_navigate.bind(this)}>
         <View style={styles.container}>
           <Image style={styles.image} source={{uri: this.props.user.photoUrl}}/>
-          <Text style={styles.description}>
-            {this.props.user.firstName + ' ' + this.props.user.lastName}
-          </Text>
-          <Text style={styles.description}>
-            {this.props.user.email}
-          </Text>
+          <View style={styles.inputContainer}>
+            <TextInput
+              style={styles.searchInput}
+              placeholder={this.props.user.firstName}
+              onChangeText={(text) => this.setState({first:text})}
+              autoCapitalize='none'
+              // onChange={this.onSearchTextChange.bind(this)}
+              />
+            <TextInput
+              style={styles.searchInput}
+              placeholder={this.props.user.lastName}
+              onChangeText={(text) => this.setState({last:text})}
+              autoCapitalize='none'
+              // onChange={this.onSearchTextChange.bind(this)}
+              />
+            <TextInput
+              style={styles.searchInput}
+              placeholder={this.props.user.email}
+              onChangeText={(text) => this.setState({email:text})}
+              autoCapitalize='none'
+              // onChange={this.onSearchTextChange.bind(this)}
+              />
+          </View>
+          <View style={styles.inputContainer}>
+            <TextInput
+              style={styles.searchInput}
+              placeholder='New Password'
+              secureTextEntry={true}
+              onChangeText={(text) => this.setState({password:text})}
+              autoCapitalize='none'
+              // onChange={this.onSearchTextChange.bind(this)}
+              />
+            <TextInput
+              style={styles.searchInput}
+              placeholder='Confirm Password'
+              secureTextEntry={true}
+              onChangeText={(text) => this.setState({confirm:text})}
+              autoCapitalize='none'
+              // onChange={this.onSearchTextChange.bind(this)}
+              />
+            <TextInput
+              style={styles.searchInput}
+              placeholder={this.props.user.photoUrl}
+              onChangeText={(text) => this.setState({photo:text})}
+              autoCapitalize='none'
+              // onChange={this.onSearchTextChange.bind(this)}
+              />
+          </View>
+          <TouchableOpacity onPress={(e)=>{this.update()}} style={styles.button}>
+            <Text style={styles.buttonText}>Update Info</Text>
+          </TouchableOpacity>
         </View>
       </OurDrawer>
     )

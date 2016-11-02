@@ -122,7 +122,6 @@ export default class UserCard extends Component {
 	        <View style={styles.text}>
 	          <Text style={styles.title}>{this.props.user.firstName+' '+this.props.user.lastName}</Text>
 	          <Text style={styles.instructions}>{this.props.user.email}</Text>
-	          <Text style={styles.states}>{this.props.user.friends.length + ' Friends'}</Text>
           </View>
           <View style={styles.buttons}>
             <TouchableOpacity onPress={this.removeFriend.bind(this)}>
