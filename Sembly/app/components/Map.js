@@ -5,7 +5,8 @@ import {
   Text,
   View,
   Navigator,
-  Dimensions
+  Dimensions,
+  TouchableHighlight
 } from 'react-native';
 
 import Spinner from './Spinner.js'
@@ -13,6 +14,7 @@ import Spinner from './Spinner.js'
 import MapView from 'react-native-maps';
 import NewEventModal from './NewEventModal.js';
 import OurDrawer from './OurDrawer.js';
+import EventModal from './EventModal.js';
 import _navigate from './navigateConfig.js';
 import NewEventFab from './NewEventFab.js';
 import Config from './Env.js';
@@ -25,6 +27,8 @@ export default class Map extends Component {
       markers: null,
       friends: null,
       modalVisible: false,
+      selectedMarker: null,
+      eventModal: false
     };
   }
 
@@ -96,7 +100,22 @@ export default class Map extends Component {
     this.fetchEvents();
   }
   openModal () {
-    this.setState({modalVisible: true})
+    this.setState({modalVisible: true});
+  }
+
+  openEvent(eventId) {
+    this.setState({eventModal: true, selectedMarker: eventId});
+  }
+  closeEvent () {
+    this.setState({eventModal:false});
+  }
+
+  getModal() {
+    if (this.state.eventModal) {
+      return <EventModal close={this.closeEvent.bind(this)} user={this.props.user} visibility={this.state.eventModal} event={this.state.selectedMarker}/>
+    } else {
+      return (<View></View>)
+    }
   }
   render () {
     if(this.state.loading){
@@ -136,9 +155,17 @@ export default class Map extends Component {
                 <MapView.Marker
                   key={marker._id}
                   coordinate={tempLoc}
-                  title={marker.name}
                   pinColor='red'
-                />
+                >
+                  <MapView.Callout width={60}>
+                    <TouchableHighlight
+                      underlayColor="transparent"
+                      onPress={ (e) => {this.openEvent(marker._id)}}
+                    >
+                      <Text>{marker.name}</Text>
+                    </TouchableHighlight>
+                  </MapView.Callout>
+                </MapView.Marker>
               )
             })}
             {this.state.friends.map(friend => {
@@ -150,15 +177,19 @@ export default class Map extends Component {
                 <MapView.Marker
                   key={friend._id}
                   coordinate={tempLoc}
-                  title={friend.firstName + ' ' + friend.lastName}
                   pinColor='green'
-                />
+                >
+                  <MapView.Callout width={60}>
+                    <Text>{friend.firstName + ' ' + friend.lastName}</Text>
+                  </MapView.Callout>
+                </MapView.Marker>
               )
             })}
             </MapView>
             <NewEventFab onPress={this.openModal.bind(this)}/>
             <NewEventModal resetPin={this.setNewEventPinCoords.bind(this)} fetchNewEvents={this.fetchEvents.bind(this)} user={this.props.user} eventCoords={this.state.x} modalVisibility={this.state.modalVisible}/>
           </View>
+          {this.getModal()}
         </OurDrawer>
       )
     }
