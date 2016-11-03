@@ -30,6 +30,12 @@ var styles = StyleSheet.create({
     textAlign: 'center',
     color: '#656565'
   },
+  errorText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: 'red',
+    paddingLeft: 10
+  },
   container: {
     padding: 30,
     marginTop: 10,
@@ -109,9 +115,31 @@ export default class Profile extends Component {
   }
 
   update() {
-    alert(this.state.first);
-    alert(this.state.photo);
-
+    this.setState({errorText: null})
+    fetch(`${Config.API_URL}/api/users/update`,{
+      method: 'PUT',
+      headers: { "Content-Type" : "application/json" },
+      body: JSON.stringify({
+        _id: this.props.user._id,
+        firstName: this.state.first,
+        lastName: this.state.last,
+        email: this.state.email,
+        password: this.state.password,
+        photoUrl: this.state.photo
+      })
+    })
+    .then(response => {
+      return response.json();
+    })
+    .then( user => {
+      this.props.setUser(user);
+      this.props.navigator.push({
+          name: 'Profile'
+      });
+    })
+    .catch( response => {
+      this.setState({errorText: 'Email may already be taken.'});
+    });
   }
 
   render(){
@@ -119,12 +147,12 @@ export default class Profile extends Component {
       <OurDrawer user={this.props.user} topBarName={'Profile'} _navigate={_navigate.bind(this)}>
         <View style={styles.container}>
           <Image style={styles.image} source={{uri: this.props.user.photoUrl}}/>
+          <Text style={styles.errorText}>{this.state.errorText}</Text>
           <View style={styles.inputContainer}>
             <TextInput
               style={styles.searchInput}
               placeholder={this.props.user.firstName}
               onChangeText={(text) => this.setState({first:text})}
-              autoCapitalize='none'
               autoCorrect={false}
               // onChange={this.onSearchTextChange.bind(this)}
               />
@@ -132,8 +160,15 @@ export default class Profile extends Component {
               style={styles.searchInput}
               placeholder={this.props.user.lastName}
               onChangeText={(text) => this.setState({last:text})}
-              autoCapitalize='none'
               autoCorrect={false}
+              // onChange={this.onSearchTextChange.bind(this)}
+              />
+            <TextInput
+              style={styles.searchInput}
+              placeholder={this.props.user.email}
+              onChangeText={(text) => this.setState({email:text})}
+              autoCorrect={false}
+              autoCapitalize='none'
               // onChange={this.onSearchTextChange.bind(this)}
               />
           </View>
@@ -158,7 +193,7 @@ export default class Profile extends Component {
               />
             <TextInput
               style={styles.searchInput}
-              placeholder={this.props.user.photoUrl}
+              placeholder='New Photo'
               onChangeText={(text) => this.setState({photo:text})}
               autoCapitalize='none'
               autoCorrect={false}

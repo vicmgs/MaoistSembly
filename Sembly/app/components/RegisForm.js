@@ -74,7 +74,6 @@ export default class RegisForm extends Component {
       email: null,
       password: null,
       confirm: null,
-      photo: null
     }
   }
 
@@ -95,7 +94,7 @@ export default class RegisForm extends Component {
         email: this.state.email,
         password: this.state.password,
         confirm: this.state.confirm,
-        photoUrl: this.state.photo
+        photoUrl: 'http://lionhallattorneys.com.ng/wp-content/uploads/2015/12/empty-profile.png'
       })
     })
     .then(response => {
@@ -131,7 +130,6 @@ export default class RegisForm extends Component {
                 style={styles.searchInput}
                 placeholder='First name'
                 onChangeText={(text) => this.setState({first:text})}
-                autoCapitalize='none'
                 autoCorrect={false}
                 // onChange={this.onSearchTextChange.bind(this)}
                 />
@@ -139,7 +137,6 @@ export default class RegisForm extends Component {
                 style={styles.searchInput}
                 placeholder='Last name'
                 onChangeText={(text) => this.setState({last:text})}
-                autoCapitalize='none'
                 autoCorrect={false}
                 // onChange={this.onSearchTextChange.bind(this)}
                 />
@@ -167,14 +164,6 @@ export default class RegisForm extends Component {
                 placeholder='Confirm password'
                 secureTextEntry={true}
                 onChangeText={(text) => this.setState({confirm:text})}
-                autoCapitalize='none'
-                autoCorrect={false}
-                // onChange={this.onSearchTextChange.bind(this)}
-                />
-              <TextInput
-                style={styles.searchInput}
-                placeholder='Photo'
-                onChangeText={(text) => this.setState({photo:text})}
                 autoCapitalize='none'
                 autoCorrect={false}
                 // onChange={this.onSearchTextChange.bind(this)}

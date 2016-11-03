@@ -62,7 +62,7 @@ export default class App extends Component {
       return <RegisForm getLocation={app.getLocation.bind(app)} setUser={app.setUser.bind(app)} navigator={navigator}/>
     }
     if(route.name === 'Profile') {
-      return <Profile user={app.state.user} navigator={navigator}/>
+      return <Profile user={app.state.user} setUser={app.setUser.bind(app)} navigator={navigator}/>
     }
     if(route.name === 'Map') {
       return <Map user={app.state.user} mongoLocation={app.state.mongoLocation} navigator={navigator}/>
