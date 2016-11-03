@@ -161,19 +161,7 @@ describe('Events Controller', function() {
     after(function(){
       eventModels.bundle.restore();
     })
-    it('should send a 200 with a success', function(done) {
-      request(app)
-          .post('/api/events/bundle')
-          .send({location: [82.894, 47.7749], userId: userId})
-          .expect(200)
-          .expect(function(res){
-            expect(res.body.length).to.equal(1);
-          })
-          .end(done);
-    });
-    it('should call eventModels.bundle', function() {
-      expect(eventModels.bundle.calledOnce).to.equal(true);
-    });
+
     it('should send a 400 with bad input', function(done) {
       request(app)
           .post('/api/events/bundle')
@@ -282,5 +270,5 @@ describe('Events Controller', function() {
           .end(done);
     });
   });
-  
+
 });

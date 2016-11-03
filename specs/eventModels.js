@@ -70,13 +70,6 @@ describe('Event Models', function() {
         done();
       });
     });
-    it('should add the invite to the users event', function(done) {
-      User.findOne({'email': 'test@test.com'}).exec()
-      .then(function(user){
-      	expect(user.invitedTo.length).to.equal(1);
-        done();
-      })
-    });
   });
 
   describe('save Event', function(){
@@ -84,7 +77,7 @@ describe('Event Models', function() {
       eventModels.saveEvent(eventId, userId)
       .then(function(){
       	done();
-      })	
+      })
   	})
     it('should save the event to the User', function(done){
       User.findOne({'email': 'test@test.com'}).exec()
@@ -116,14 +109,14 @@ describe('Event Models', function() {
   });
 
 //-------This section requires eventModels.addEvent to be working--------
-  
+
   describe('get events', function() {
     before(function(done){
       this.timeout(7000);
       eventModels.addEvent(events[0])
       .then(function(){
         events[1].invitedUsers = [userId];
-        eventModels.addEvent(events[1]) 
+        eventModels.addEvent(events[1])
       })
       .then(function(){
         eventModels.addEvent(events[2])
@@ -136,48 +129,6 @@ describe('Event Models', function() {
       eventModels.getEvents([82.894, 47.7749])
       .then(function(events){
         expect(events.length).equal(3);
-        done();
-      })
-    });
-  });
-
-  describe('bundle', function() {
-    it('should return nearby public events', function(done) {
-      this.timeout(7000);
-      eventModels.bundle(userId, [82.894, 47.7749])
-      .then(function(bund) {
-        bundle = bund;
-        var publicEvents = bundle.filter(function(event){
-          return event.marking === 'public' ? true : false;
-        });
-        expect(publicEvents.length).to.equal(1);
-        done();
-      })
-    });
-    it('should return invited events with marking: invited', function(done) {
-      var inviteEvents = bundle.filter(function(event){
-        return event.marking === 'invited' ? true : false;
-      });
-      expect(inviteEvents.length).to.equal(1);
-      done();
-    });
-    it('should return saved events with marking: saved', function(done) {
-      var savedEvents = bundle.filter(function(event){
-        return event.marking === 'saved' ? true : false;
-      });
-      expect(savedEvents.length).to.equal(1);
-      done();
-    });
-    it('should return a single array with no repeats', function() {
-      expect(bundle.length).to.equal(3);
-    });  
-  });
-
-  describe('get Invited', function() {
-    it('should get all the events a user is invited to', function(done) {
-      eventModels.getInvited(userId)
-      .then(function(user){
-        expect(!!user.invitedTo[0].name).equal(true);
         done();
       })
     });
@@ -235,7 +186,7 @@ describe('Event Models', function() {
       .catch(function(error) {
         done();
       });
-    });   
+    });
     it('should remove the event from the users saved events', function(done) {
         this.timeout(10000);
         setTimeout(function(){
@@ -246,17 +197,9 @@ describe('Event Models', function() {
           });
         }, 1000)
     });
-    it('should remove the event from the users invited events', function(done) {
-      this.timeout(10000);
-      User.findOne({'email': 'test@test.com'}).exec()
-      .then(function(user) {
-        expect(user.invitedTo.length).to.equal(1);
-        done();
-      });
-    });
   });
 
-  
+
 
 
 });
