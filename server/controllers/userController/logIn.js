@@ -9,7 +9,7 @@ module.exports = (req, res) => {
     if (response === 'Incorrect Password') {
     	res.status(400).send('Incorrect Password');
     } else if (response === 'User does not exist') {
-    	res.status(400).send('Incorrect Password');
+    	res.status(400).send('User does not exist');
     } else {
     	res.status(200).send(response);
     }
