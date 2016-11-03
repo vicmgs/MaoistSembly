@@ -103,8 +103,7 @@ export default class RegisForm extends Component {
     })
     .then( user => {
       this.props.setUser(user);
-      this.props.getLocation();
-      this._navigate();
+      this.props.getLocation(this._navigate.bind(this));
     })
     .catch(err => {
       this.props.navigator.push({

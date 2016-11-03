@@ -32,14 +32,15 @@ export default class App extends Component {
     app = this
   }
 
-  getLocation() {
+  getLocation(callback) {
     let context = this;
     navigator.geolocation.getCurrentPosition(
       (data) => {
         context.setState({
-          currentLoc: [data.coords.latitude, data.coords.longitude], 
+          currentLoc: [data.coords.latitude, data.coords.longitude],
           mongoLocation: [data.coords.longitude, data.coords.latitude]
         });
+        callback();
       },
       (error) => alert(JSON.stringify(error)),
       {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
