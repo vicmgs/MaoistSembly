@@ -132,6 +132,7 @@ describe('User Controller', function() {
       request(app)
         .put('/api/users/update')
         .send({
+          _id: testUser._id,
           email: testUser.email,
           firstName: newFirstName,
           lastName: newLastName,
@@ -147,6 +148,7 @@ describe('User Controller', function() {
       request(app)
         .put('/api/users/update')
         .send({
+          _id: testUser._id,
           email: testUser.email,
           password: newPassword
          })

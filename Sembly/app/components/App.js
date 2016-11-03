@@ -32,14 +32,15 @@ export default class App extends Component {
     app = this
   }
 
-  getLocation() {
+  getLocation(callback) {
     let context = this;
     navigator.geolocation.getCurrentPosition(
       (data) => {
         context.setState({
-          currentLoc: [data.coords.latitude, data.coords.longitude], 
+          currentLoc: [data.coords.latitude, data.coords.longitude],
           mongoLocation: [data.coords.longitude, data.coords.latitude]
         });
+        callback();
       },
       (error) => alert(JSON.stringify(error)),
       {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
@@ -61,7 +62,7 @@ export default class App extends Component {
       return <RegisForm getLocation={app.getLocation.bind(app)} setUser={app.setUser.bind(app)} navigator={navigator}/>
     }
     if(route.name === 'Profile') {
-      return <Profile user={app.state.user} navigator={navigator}/>
+      return <Profile user={app.state.user} setUser={app.setUser.bind(app)} navigator={navigator}/>
     }
     if(route.name === 'Map') {
       return <Map user={app.state.user} mongoLocation={app.state.mongoLocation} navigator={navigator}/>

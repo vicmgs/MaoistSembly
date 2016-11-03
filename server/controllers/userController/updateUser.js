@@ -3,6 +3,7 @@ var userModels = require('../../models/userModels');
 module.exports = (req, res) => {
   var user = {
     email: req.body.email,
+    oldEmail: req.body.oldEmail,
     firstName: req.body.firstName,
     lastName: req.body.lastName,
     password: req.body.password,
@@ -11,9 +12,9 @@ module.exports = (req, res) => {
 
   return userModels.updateUser(user)
   .then((updatedUser) => {
-    res.status(200).send(updatedUser.email);
+    res.status(200).send(updatedUser);
   })
   .catch((err) => {
-    res.status(500).send();
+    res.status(500).send(err.message);
   });
 }
