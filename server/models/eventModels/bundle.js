@@ -6,38 +6,32 @@ var User = require('../../schemas/userSchema');
 var getEvents = require('./getEvents');
 
 module.exports = (userId, location) => {
-  var invited;
-  var saved;
+  var events=[];
   return User.findOne({'_id': userId})
-  .populate('invitedTo')
-  .populate('saved')
-  .exec()
+  .populate('friends')
   .then( user => {
-  	invited = user.invitedTo;
-  	saved = user.saved;
-  	return getEvents(location);
+    return new Promise((resolve, reject) => {
+    	user.friends.forEach(friend => {
+        friend.hosting.forEach(event => {
+          events.push(event);
+        })
+      })
+      user.hosting.forEach(event => {
+        events.push(event);
+      })
+      resolve(events);
+    });
   })
   .then( events => {
-  	return new Promise((resolve, reject) => {
-  	  //Filter out repeats
-  	  var unique = {};
-  	  events.forEach(event => {
-  	  	event.marking = 'public';
-  	  	unique[event._id] = event;
-  	  });
-  	  invited.forEach( event => {
-  	  	event.marking = 'invited';
-  	  	unique[event._id] = event;
-  	  });
-  	  saved.forEach( event => {
-  	  	event.marking = 'saved';
-  	  	unique[event._id] = event;
-  	  });
-  	  var results = [];
-  	  for (var i in unique) {
-  	  	results.push(unique[i]);
-  	  }
-  	  resolve(results);
-  	})
+  	var promises = []
+    var results = [];
+
+    events.forEach( eid => {
+      promises.push(Event.findOne({'_id': eid}));
+    })
+    return Promise.all(promises)
+  })
+  .then(events => {
+    return events;
   })
 }
