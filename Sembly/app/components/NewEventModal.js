@@ -60,7 +60,8 @@ export default class NewEventModal extends Component {
       image: 'http://blogs-images.forbes.com/steveolenski/files/2015/07/Messe_Luzern_Corporate_Event.jpg',
       tags: [],
       invitedUsers: [],
-      visibility: 'public'
+      visibility: 'public',
+      host: this.props.userId
     }
 
     eventToBePosted.location[0] = this.props.eventCoords.longitude;
