@@ -5,7 +5,7 @@ var mongoose = require('mongoose');
 
 describe('Event Schema', function () {
   it('schema should have properties id, name, location, startTime, endTime, tags, invitedUsers, checkedInUsers, image, visibility and savedUsers', function() {
-    expect(Event.schema.obj).to.have.all.keys(['id', 'name', 'location', 'startTime', 'endTime', 'tags','image', 'invitedUsers', 'checkedInUsers', 'visibility', 'savedUsers']);
+    expect(Event.schema.obj).to.have.all.keys(['id', 'name', 'location', 'startTime', 'endTime', 'tags','image', 'invitedUsers', 'checkedInUsers', 'visibility', 'createdBy', 'savedUsers']);
   });
 });
 

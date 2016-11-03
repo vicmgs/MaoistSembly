@@ -22,6 +22,7 @@ var eventSchema = new Schema({
     type: String,
     default: 'public'
   },
+  createdBy: String,
   savedUsers: [{ type: Schema.Types.ObjectId, ref: 'User' }]
 })
 

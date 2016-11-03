@@ -31,7 +31,7 @@ export default class NewEventModal extends Component {
     fetch(`${Config.API_URL}/api/friends/getFriends`,{
       method: 'POST',
       headers: { "Content-Type" : "application/json" },
-      body: JSON.stringify({userId: this.props.userId, search: ''})
+      body: JSON.stringify({userId: this.props.user._id, search: ''})
     })
     .then(response => {
       return response.json();
@@ -55,13 +55,14 @@ export default class NewEventModal extends Component {
 
     let eventToBePosted = {
       name: this.state.newEventName,
+      createdBy: this.props.user.firstName + ' ' + this.props.user.lastName,
       location: [],
       startTime: this.state.newEventStartTime,
       image: 'http://blogs-images.forbes.com/steveolenski/files/2015/07/Messe_Luzern_Corporate_Event.jpg',
       tags: [],
       invitedUsers: [],
       visibility: 'public',
-      host: this.props.userId
+      host: this.props.user._id
     }
 
     eventToBePosted.location[0] = this.props.eventCoords.longitude;
@@ -76,7 +77,7 @@ export default class NewEventModal extends Component {
     })
     .then(response => {
       this.setState({
-        errorText: 'Event created succesfully!',
+        errorText: 'Event created successfully!',
         newEventName: '',
         newEventStartTime: new Date(),
         newEventTags: '',
@@ -107,13 +108,13 @@ export default class NewEventModal extends Component {
           </View>
 
           <View style={styles.headerContainer}>
-            <Text style={styles.header}>Create a New Event!</Text>
+            <Text style={styles.header}>Create a New Event</Text>
           </View>
 
           <View style={styles.textInputContainer}>
             <TextInput
               style={styles.textInput}
-              placeholder='Enter a title for your Event'
+              placeholder='Enter a title for your event'
               onChangeText={(text) => this.setState({newEventName: text})}
               />
           </View>
@@ -121,7 +122,7 @@ export default class NewEventModal extends Component {
           <View style={styles.textInputContainer}>
             <TextInput
               style={styles.textInput}
-              placeholder='Enter tags, separated by a space'
+              placeholder='Enter a description for your event'
               onChangeText={(text) => this.setState({newEventTags: text})}
               />
           </View>
