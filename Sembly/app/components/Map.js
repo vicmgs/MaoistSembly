@@ -143,8 +143,8 @@ export default class Map extends Component {
             })}
             {this.state.friends.map(friend => {
               var tempLoc = {
-                latitude: friend.location[1] + Math.random()*0.01,
-                longitude: friend.location[0] + Math.random()*0.01
+                latitude: friend.location ? friend.location[1] + Math.random()*0.01 : 0,
+                longitude: friend.location ? friend.location[0] + Math.random()*0.01 : 0
               }
               return (
                 <MapView.Marker
