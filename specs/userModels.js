@@ -119,4 +119,44 @@ describe('User Models', function() {
     });
   });
 
+  describe('Update user', () => {
+    it('should update firstName, lastName and photoUrl', (done) => {
+      var newFirstName = 'James';
+      var newLastName = 'Bond'
+      var newPhotoUrl = 'http://vignette1.wikia.nocookie.net/jamesbond/images/b/bc/James_Bond_%28Literary%29_-_Profile.jpg'
+
+      userModels.userSearch('test')
+      .then((users) => {
+        var user = users[0];
+        user.firstName = newFirstName;
+        user.lastName = newLastName;
+        user.photoUrl = newPhotoUrl;
+        userModels.updateUser(user)
+        .then((updatedUser) => {
+          expect(updatedUser.firstName).to.equal(newFirstName);
+          expect(updatedUser.lastName).to.equal(newLastName);
+          expect(updatedUser.photoUrl).to.equal(newPhotoUrl);
+          done();
+        });
+      })
+    });
+
+    it('should update password and able to login using new password', (done) => {
+      var newPassword = 'newPassword';
+
+      userModels.userSearch('James')
+      .then((users) => {
+        var user = users[0];
+        user.password = newPassword;
+        userModels.updateUser(user)
+        .then((updatedUser) => {
+          userModels.logIn(testUser.email, newPassword)
+          .then(function(user) {
+            expect(user.firstName).to.equal('James');
+            done();
+          });
+        });
+      });
+    });
+  });
 });

@@ -122,4 +122,49 @@ describe('User Controller', function() {
         .end(done);
     });
   });
+
+  describe('Update user data', () => {
+    it('should return a 200 status code after update the user data (firstName, lastName, photoUrl)', (done) => {
+      var newFirstName = 'James';
+      var newLastName = 'Bond';
+      var newPhotoUrl = 'http://vignette1.wikia.nocookie.net/jamesbond/images/b/bc/James_Bond_%28Literary%29_-_Profile.jpg'
+
+      request(app)
+        .put('/api/users/update')
+        .send({
+          email: testUser.email,
+          firstName: newFirstName,
+          lastName: newLastName,
+          photoUrl: newPhotoUrl
+         })
+        .expect(200)
+        .end(done);
+    });
+
+    it('should return a 200 status code after update the password', (done) => {
+      var newPassword = 'newPassword';
+
+      request(app)
+        .put('/api/users/update')
+        .send({
+          email: testUser.email,
+          password: newPassword
+         })
+        .expect(200)
+        .end(done);
+    });
+
+    it('should be able to login using the new password', (done) => {
+      var newPassword = 'newPassword';
+      request(app)
+        .post('/api/users/login')
+        .send({email: testUser.email, password: newPassword})
+        .expect(200)
+        .expect(function(res){
+          expect(res.body.firstName).to.equal('James');
+          expect(res.body.lastName).to.equal('Bond');
+        })
+        .end(done);
+    });
+  });
 });
