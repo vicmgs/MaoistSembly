@@ -120,9 +120,9 @@ export default class Profile extends Component {
       method: 'PUT',
       headers: { "Content-Type" : "application/json" },
       body: JSON.stringify({
-        _id: this.props.user._id,
         firstName: this.state.first,
         lastName: this.state.last,
+        oldEmail: this.props.user.email,
         email: this.state.email,
         password: this.state.password,
         photoUrl: this.state.photo

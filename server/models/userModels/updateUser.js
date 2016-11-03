@@ -2,7 +2,7 @@ var User = require('../../schemas/userSchema');
 
 module.exports = (user) => {
   return User.findOne({
-    _id: user._id
+    email: user.oldEmail
   })
   .then((lookedUpUser) => {
     if (user.firstName && user.firstName !== '' && user.firstName !== lookedUpUser.firstName) {
