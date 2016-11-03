@@ -11,11 +11,9 @@ import {
 
 //https://github.com/root-two/react-native-drawer
 import Drawer from 'react-native-drawer';
-
 import TopBar from './TopBar.js';
 import OurDrawer from './OurDrawer.js';
 import Menu from './Menu.js';
-
 import _navigate from './navigateConfig.js';
 
 

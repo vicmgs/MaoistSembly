@@ -1,5 +1,6 @@
 // EventModal.js
 import React, { Component } from 'react';
+import { GiftedChat } from 'react-native-gifted-chat';
 import {
   StatusBar,
   StyleSheet,
@@ -17,23 +18,23 @@ import UserCard from './UserCard.js';
 import Modal from 'react-native-modalbox';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Config from './Env.js';
-
+ 
 const styles = StyleSheet.create({
   modal: {
     marginTop: 40,
     flex: 1
   },
   scroll: {
-  	flex: 1
+    flex: 1
   },
   container: {
     flexDirection: 'row',
     justifyContent: 'center'
   },
   title: {
-  	fontSize: 40,
-  	color: 'black',
-  	alignSelf: 'center'
+    fontSize: 40,
+    color: 'black',
+    alignSelf: 'center'
   },
   absolute: {
     position: 'absolute',
@@ -77,7 +78,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   actionButton: {
-  	margin: 10,
+    margin: 10,
     height: 36,
     flex: 1,
     flexDirection: 'row',
@@ -118,14 +119,39 @@ export default class EventModal extends Component {
   constructor (props) {
     super(props);
     this.state = {
-    	visible: false,
-    	loading: true,
-    	button: styles.button
+      visible: false,
+      loading: true,
+      button: styles.button, 
+      messages: []
     };
+    this.onSend = this.onSend.bind(this);
   }
   componentWillMount() {
-  	this.setState({loading:true})
+    this.setState({loading:true})
+      this.setState({
+      messages: [
+        {
+          _id: 1,
+          text: 'Hello developer',
+          createdAt: new Date(Date.UTC(2016, 7, 30, 17, 20, 0)),
+          user: {
+            _id: 2,
+            name: 'React Native',
+            avatar: 'https://facebook.github.io/react/img/logo_og.png',
+          },
+        },
+      ],
+    });
   }
+
+  onSend(messages = []) {
+  this.setState((previousState) => {
+    return {
+      messages: GiftedChat.append(previousState.messages, messages),
+    };
+  });
+}
+
   transformDate(dateStr){
     var months = [ "January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December" ];
@@ -153,7 +179,7 @@ export default class EventModal extends Component {
     return day + part1 + part2 + hour + ':' + part4 + amOrPm;
   }
   getEvent() {
-  	fetch(`${Config.API_URL}/api/events/` + this.props.event)
+    fetch(`${Config.API_URL}/api/events/` + this.props.event)
     .then(response => {
       return response.json();
     })
@@ -166,24 +192,31 @@ export default class EventModal extends Component {
   }
 
   getRender () {
-  	if (this.state.loading === true) {
-  		this.getEvent();
-  		return (<Spinner/>)
-  	} else {
-  		return (
-  			<View>
-	  			<Image style={styles.image} source={{uri: this.state.event.image}}/>
-  				<View>
-	  				<Text style={styles.title} >{this.state.event.name}</Text>
-  				</View>
-  				<View>
-  				  <Text style={styles.description}>{this.transformDate(this.state.event.startTime)}</Text>
-  				</View>
-  				<ScrollView>
-  				</ScrollView>
-  			</View>
-  			)
-  	}
+    if (this.state.loading === true) {
+      this.getEvent();
+      return (<Spinner/>)
+    } else {
+      return (
+        <View>
+          <Image style={styles.image} source={{uri: this.state.event.image}}/>
+          <View>
+            <Text style={styles.title} >{this.state.event.name}</Text>
+          </View>
+          <View>
+            <Text style={styles.description}>{this.transformDate(this.state.event.startTime)}</Text>
+          </View>
+          <ScrollView>
+         <GiftedChat
+          messages={this.state.messages}
+          onSend={this.onSend}
+          user={{
+          _id: 1,
+                }}
+          />
+          </ScrollView>
+        </View>
+        )
+    }
   }
   render () {
     let context = this;
@@ -192,9 +225,9 @@ export default class EventModal extends Component {
         <View style={styles.container}>
           {this.getRender()}
           <View style={styles.absoluteX}>
-	          <TouchableOpacity onPress={() => {this.props.close(); context.refs.EventModal.close()}}>
-	            <Icon style={styles.closeButton} name='close'/>
-	          </TouchableOpacity>
+            <TouchableOpacity onPress={() => {this.props.close(); context.refs.EventModal.close()}}>
+              <Icon style={styles.closeButton} name='close'/>
+            </TouchableOpacity>
           </View>
         </View>
       </Modal>
