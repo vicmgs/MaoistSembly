@@ -124,7 +124,7 @@ export default class Map extends Component {
             <MapView.Marker draggable
               coordinate={this.state.x}
               pinColor='yellow'
-              title='The location of your next event!'
+              title='Create New Event'
               onDragEnd={(e) => this.setState({ x: e.nativeEvent.coordinate })}
             />
             {this.state.markers.map(marker => {
