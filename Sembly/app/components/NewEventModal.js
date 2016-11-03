@@ -31,7 +31,7 @@ export default class NewEventModal extends Component {
     fetch(`${Config.API_URL}/api/friends/getFriends`,{
       method: 'POST',
       headers: { "Content-Type" : "application/json" },
-      body: JSON.stringify({userId: this.props.userId, search: ''})
+      body: JSON.stringify({userId: this.props.user._id, search: ''})
     })
     .then(response => {
       return response.json();
@@ -55,13 +55,14 @@ export default class NewEventModal extends Component {
 
     let eventToBePosted = {
       name: this.state.newEventName,
+      createdBy: this.props.user.firstName + ' ' + this.props.user.lastName,
       location: [],
       startTime: this.state.newEventStartTime,
       image: 'http://blogs-images.forbes.com/steveolenski/files/2015/07/Messe_Luzern_Corporate_Event.jpg',
       tags: [],
       invitedUsers: [],
       visibility: 'public',
-      host: this.props.userId
+      host: this.props.user._id
     }
 
     eventToBePosted.location[0] = this.props.eventCoords.longitude;

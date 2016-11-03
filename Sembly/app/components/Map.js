@@ -157,7 +157,7 @@ export default class Map extends Component {
             })}
             </MapView>
             <NewEventFab onPress={this.openModal.bind(this)}/>
-            <NewEventModal resetPin={this.setNewEventPinCoords.bind(this)} fetchNewEvents={this.fetchEvents.bind(this)} userId={this.props.user._id} eventCoords={this.state.x} modalVisibility={this.state.modalVisible}/>
+            <NewEventModal resetPin={this.setNewEventPinCoords.bind(this)} fetchNewEvents={this.fetchEvents.bind(this)} user={this.props.user} eventCoords={this.state.x} modalVisibility={this.state.modalVisible}/>
           </View>
         </OurDrawer>
       )

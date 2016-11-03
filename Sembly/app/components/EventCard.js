@@ -63,6 +63,7 @@ export default class EventCard extends Component {
           <Image style={styles.image} source={{uri: this.props.event.image}}/>
           <View style={styles.text}>
             <Text style={styles.title}>{this.props.event.name}</Text>
+            <Text style={styles.hosted}>Created by: {this.props.event.createdBy}</Text>
             <Text style={styles.instructions}>{time.toString()}</Text>
           </View>
         </TouchableOpacity>
@@ -83,8 +84,12 @@ const styles = StyleSheet.create({
     fontSize:12,
     color: 'black'
   },
+  hosted: {
+    color: 'black',
+    marginBottom:10
+  },
   instructions: {
-    color: 'black'
+    color: 'grey'
   },
   image: {
     borderRadius:3,
