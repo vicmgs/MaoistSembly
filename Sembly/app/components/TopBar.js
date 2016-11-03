@@ -19,12 +19,18 @@ export default class TopBar extends Component {
           <Icon name='menu' style={styles.content}></Icon>
         </TouchableOpacity>
         <Text style={styles.logo}>{this.props.topBarName ? this.props.topBarName : 'Sembly'}</Text>
+<<<<<<< HEAD
         {this.props.topBarName === 'Map' ?
           <TouchableOpacity onPress={()=> {this.props._navigate('Map')}}>
             <Icon name='cached' style={styles.content}></Icon>
           </TouchableOpacity> :
           <Text></Text>
         }
+=======
+        <TouchableOpacity onPress={()=> {this.props._navigate('Map')}}>
+          <Icon name='cached' style={styles.content}></Icon>
+        </TouchableOpacity>
+>>>>>>> 9b0f9e57049180bd55a1a51d694a2fed2357e36a
       </View>
     )
   }
