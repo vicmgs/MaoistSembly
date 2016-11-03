@@ -77,7 +77,7 @@ export default class NewEventModal extends Component {
     })
     .then(response => {
       this.setState({
-        errorText: 'Event created succesfully!',
+        errorText: 'Event created successfully!',
         newEventName: '',
         newEventStartTime: new Date(),
         newEventTags: '',
@@ -108,13 +108,13 @@ export default class NewEventModal extends Component {
           </View>
 
           <View style={styles.headerContainer}>
-            <Text style={styles.header}>Create a New Event!</Text>
+            <Text style={styles.header}>Create a New Event</Text>
           </View>
 
           <View style={styles.textInputContainer}>
             <TextInput
               style={styles.textInput}
-              placeholder='Enter a title for your Event'
+              placeholder='Enter a title for your event'
               onChangeText={(text) => this.setState({newEventName: text})}
               />
           </View>
@@ -122,7 +122,7 @@ export default class NewEventModal extends Component {
           <View style={styles.textInputContainer}>
             <TextInput
               style={styles.textInput}
-              placeholder='Enter tags, separated by a space'
+              placeholder='Enter a description for your event'
               onChangeText={(text) => this.setState({newEventTags: text})}
               />
           </View>

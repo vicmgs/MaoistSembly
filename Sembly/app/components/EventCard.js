@@ -42,13 +42,7 @@ export default class EventCard extends Component {
   }
 
   render () {
-    var time;
-    if (this.props.event.startTime - Date.now() < 0) {
-      time = this.props.event.endTime
-    } else {
-      time = this.props.event.startTime
-    }
-    var time = this.transformDate( time );
+    var time = this.transformDate( this.props.event.startTime );
     var background = this.props.index % 2 === 0 ? '#F5FCFF' : '#fff'
     return (
       <View>
@@ -64,7 +58,7 @@ export default class EventCard extends Component {
           <View style={styles.text}>
             <Text style={styles.title}>{this.props.event.name}</Text>
             <Text style={styles.hosted}>Created by: {this.props.event.createdBy}</Text>
-            <Text style={styles.instructions}>{time.toString()}</Text>
+            <Text style={styles.instructions}>Start: {time.toString()}</Text>
           </View>
         </TouchableOpacity>
       </View>

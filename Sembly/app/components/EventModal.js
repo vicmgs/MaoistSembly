@@ -18,7 +18,7 @@ import UserCard from './UserCard.js';
 import Modal from 'react-native-modalbox';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Config from './Env.js';
- 
+
 const styles = StyleSheet.create({
   modal: {
     marginTop: 40,
@@ -32,7 +32,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   title: {
-    fontSize: 40,
+    fontSize: 30,
+    marginBottom: 10,
     color: 'black',
     alignSelf: 'center'
   },
@@ -52,7 +53,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent'
   },
   description: {
-    marginBottom: 10,
     fontSize: 18,
     textAlign: 'center',
     color: '#656565'
@@ -112,6 +112,10 @@ const styles = StyleSheet.create({
     width: Dimensions.get('window').width,
     marginBottom: 20,
     zIndex: 1
+  },
+  chats: {
+    margin: 15,
+    borderColor: 'grey'
   }
 });
 
@@ -121,7 +125,7 @@ export default class EventModal extends Component {
     this.state = {
       visible: false,
       loading: true,
-      button: styles.button, 
+      button: styles.button,
       messages: []
     };
     this.onSend = this.onSend.bind(this);
@@ -203,9 +207,10 @@ export default class EventModal extends Component {
             <Text style={styles.title} >{this.state.event.name}</Text>
           </View>
           <View>
+            <Text style={styles.description}>{this.state.event.tags.join(' ')}</Text>
             <Text style={styles.description}>{this.transformDate(this.state.event.startTime)}</Text>
           </View>
-          <ScrollView>
+          <ScrollView style={styles.chats}>
          <GiftedChat
           messages={this.state.messages}
           onSend={this.onSend}
