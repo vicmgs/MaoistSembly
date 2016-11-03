@@ -7,8 +7,6 @@ module.exports = (event) => {
   var newEvent = new Event(event);
   return newEvent.save()
   .then( event => {
-    console.log(userId);
-    console.log(event);
   	return User.findOneAndUpdate({'_id': userId}, {$push: {'hosting': event._id}});
   })
   .then( user => {
