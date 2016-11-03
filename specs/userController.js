@@ -132,8 +132,7 @@ describe('User Controller', function() {
       request(app)
         .put('/api/users/update')
         .send({
-          _id: testUser._id,
-          email: testUser.email,
+          oldEmail: testUser.email,
           firstName: newFirstName,
           lastName: newLastName,
           photoUrl: newPhotoUrl
@@ -148,8 +147,7 @@ describe('User Controller', function() {
       request(app)
         .put('/api/users/update')
         .send({
-          _id: testUser._id,
-          email: testUser.email,
+          oldEmail: testUser.email,
           password: newPassword
          })
         .expect(200)

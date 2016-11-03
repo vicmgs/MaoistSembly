@@ -131,6 +131,7 @@ describe('User Models', function() {
         user.firstName = newFirstName;
         user.lastName = newLastName;
         user.photoUrl = newPhotoUrl;
+        user.oldEmail = user.email;
         userModels.updateUser(user)
         .then((updatedUser) => {
           expect(updatedUser.firstName).to.equal(newFirstName);
@@ -148,6 +149,7 @@ describe('User Models', function() {
       .then((users) => {
         var user = users[0];
         user.password = newPassword;
+        user.oldEmail = user.email;
         userModels.updateUser(user)
         .then((updatedUser) => {
           userModels.logIn(testUser.email, newPassword)
