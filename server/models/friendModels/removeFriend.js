@@ -7,7 +7,7 @@ module.exports = (userId, friendId) => {
       '_id': userId
     }, {
       $pull: {
-        requests: friendId
+        friends: friendId
       }
     }).then( success => {
       return User.findOneAndUpdate({
