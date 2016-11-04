@@ -19,6 +19,12 @@ container: {
   marginTop: 100,
   alignItems: 'center'
 },
+errorText: {
+  fontSize: 16,
+  fontWeight: 'bold',
+  color: 'red',
+  paddingLeft: 10
+},
 buttonText: {
   fontSize: 20,
   fontWeight: 'bold',
@@ -84,7 +90,6 @@ export default class RegisForm extends Component {
   }
 
   register() {
-   this.setState({loading: true});
     fetch(`${Config.API_URL}/api/users/signup`,{
       method: 'POST',
       headers: { "Content-Type" : "application/json" },
@@ -105,9 +110,13 @@ export default class RegisForm extends Component {
       this.props.getLocation(this._navigate.bind(this));
     })
     .catch(err => {
-      this.props.navigator.push({
-          name: 'RegisForm'
-      });
+      var context = this;
+      this.setState({errorText: 'This email is currently in use'});
+      setTimeout(() => {
+        context.props.navigator.push({
+            name: 'RegisForm'
+        });
+      }, 1000);
     })
   }
 
@@ -126,6 +135,8 @@ export default class RegisForm extends Component {
         <View>
           <View style={styles.container}>
             <View style={styles.inputContainer}>
+            <Text style={styles.errorText}>{this.state.errorText}</Text>
+            <Text style={styles.errorText}></Text>
               <TextInput
                 style={styles.searchInput}
                 placeholder='First name'

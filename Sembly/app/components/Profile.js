@@ -132,10 +132,14 @@ export default class Profile extends Component {
       return response.json();
     })
     .then( user => {
+      var context = this;
       this.props.setUser(user);
-      this.props.navigator.push({
-          name: 'Profile'
-      });
+      this.setState({errorText: 'User Updated!'});
+      setTimeout(() => {
+        context.props.navigator.push({
+            name: 'Profile'
+        });
+      }, 1000);
     })
     .catch( response => {
       this.setState({errorText: 'Email may already be taken.'});

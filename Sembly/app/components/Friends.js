@@ -54,7 +54,8 @@ var styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     color: 'red',
-    paddingLeft: 10
+    paddingLeft: 10,
+    textAlign: 'left',
   },
   button: {
     height: 36,
@@ -346,7 +347,9 @@ export default class Friends extends Component {
               <Text style={styles.buttonText}>Friend Requests</Text>
             </TouchableOpacity>
           </View>
-          <Text style={styles.errorText}>{this.state.msg}</Text>
+          <View style={styles.errorContainer}>
+            <Text style={styles.errorText}>{this.state.msg}</Text>
+          </View>
           <View style={styles.inputContainer}>
             <TextInput
               style={styles.searchInput}
