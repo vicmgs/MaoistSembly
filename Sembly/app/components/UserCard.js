@@ -63,10 +63,7 @@ export default class UserCard extends Component {
       body: JSON.stringify({userId: this.props.currentUserId, friendId: this.props.user._id})
     })
     .then(response => {
-      // alert(response.status)
-      this.props.refreshUserFriends();
-      this.props.getNewRequests(this);
-      return response.json();
+      this.props.acceptRequest();
     })
     .catch( error => {
       console.log(error);
@@ -81,10 +78,7 @@ export default class UserCard extends Component {
       body: JSON.stringify({userId: this.props.currentUserId, friendId: this.props.user._id})
     })
     .then(response => {
-      // alert(response.status)
-      this.props.refreshUserFriends();
-      this.props.getNewRequests(this);
-      return response.json();
+      this.props.rejectRequest();
     })
     .catch( error => {
       console.log(error);

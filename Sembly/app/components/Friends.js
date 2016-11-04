@@ -127,11 +127,16 @@ export default class Friends extends Component {
       return response.json();
     })
     .then( friends => {
-        this.setState({
-          feed: friends,
-          friends: friends,
-          loading: false
-        });
+      friends.sort(function(a, b) {
+        if(a.firstName < b.firstName) return -1;
+        if(a.firstName > b.firstName) return 1;
+        return 0;
+      });
+      this.setState({
+        feed: friends,
+        friends: friends,
+        loading: false
+      });
     })
     .catch( error => {
       console.log(error);
@@ -153,6 +158,26 @@ export default class Friends extends Component {
         });
      })
      .catch( error => {
+       console.log(error);
+    });
+  }
+  getNewRequestsChangeFeed(context){
+     fetch(`${Config.API_URL}/api/friends/getRequests`,{
+       method: 'POST',
+       headers: { "Content-Type" : "application/json" },
+       body: JSON.stringify({userId: this.props.user._id})
+     })
+     .then(response => {
+       return response.json();
+     })
+     .then( requests => {
+        this.setState({
+          requests: requests,
+          feed: requests,
+          loading: false
+        });
+     })
+     .catch( error => {
       console.log(error);
     });
   }
@@ -168,6 +193,11 @@ export default class Friends extends Component {
       return response.json();
     })
     .then( users => {
+      users.sort(function(a, b) {
+        if(a.firstName < b.firstName) return -1;
+        if(a.firstName > b.firstName) return 1;
+        return 0;
+      });
       this.setState({
         feed: users,
         users: users,
@@ -189,11 +219,16 @@ export default class Friends extends Component {
       return response.json();
     })
     .then( friends => {
-        this.setState({
-          feed: friends,
-          friends: friends,
-          loading: false
-        });
+      friends.sort(function(a, b) {
+        if(a.firstName < b.firstName) return -1;
+        if(a.firstName > b.firstName) return 1;
+        return 0;
+      });
+      this.setState({
+        feed: friends,
+        friends: friends,
+        loading: false
+      });
     })
     .catch( error => {
       console.log(error);
@@ -309,14 +344,17 @@ export default class Friends extends Component {
               return (
                 <UserCard
                   key={index}
-                  refreshUserFriends={
+                  acceptRequest={
                     ()=> {
-                      this.filterUsers();
+                      this.filterFriends();
                       this.getFriends();
+                      this.getNewRequests();
                     }
                   }
-                  getNewRequests = {
-                    (context) => this.getNewRequests(context)
+                  rejectRequest = {
+                    () => {
+                      this.getNewRequestsChangeFeed();
+                    }
                   }
                   currentUserId={this.props.user._id}
                   view={this.state.view}
