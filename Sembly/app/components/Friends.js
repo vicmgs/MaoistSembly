@@ -344,6 +344,12 @@ export default class Friends extends Component {
               return (
                 <UserCard
                   key={index}
+                  removeFriend={
+                    ()=> {
+                      this.filterFriends();
+                      this.getFriends();
+                    }
+                  }
                   acceptRequest={
                     ()=> {
                       this.filterFriends();

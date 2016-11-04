@@ -47,8 +47,7 @@ export default class UserCard extends Component {
     })
     .then(response => {
       // alert(response.status)
-      this.props.refreshUserFriends();
-      return response.json();
+      this.props.removeFriend();
     })
     .catch( error => {
       console.log(error);
