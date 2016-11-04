@@ -21,7 +21,8 @@ export default class UserCard extends Component {
     }
   }
 
-  addFriend() {
+  addFriend(callback) {
+    console.log('here');
     fetch(`${Config.API_URL}/api/friends/friendRequest`,{
       method: 'POST',
       headers: { "Content-Type" : "application/json" },
@@ -29,7 +30,7 @@ export default class UserCard extends Component {
     })
     .then(response => {
       // alert(response.status)
-      return response.json();
+      callback();
     })
     .catch( error => {
       console.log(error);
@@ -121,7 +122,9 @@ export default class UserCard extends Component {
             <TouchableOpacity onPress={this.removeFriend.bind(this)}>
               {this.props.view === 'Friends' ? <Icon name='cancel' style={styles.icon}></Icon> : <Text></Text>}
             </TouchableOpacity>
-            <TouchableOpacity onPress={this.addFriend.bind(this)}>
+            <TouchableOpacity onPress={ () => {
+              this.addFriend(this.props.setMsg);
+            }}>
               {this.props.view === 'Users' && this.reqShow() ? <Icon name='person-add' style={styles.icon}></Icon> : <Text></Text>}
             </TouchableOpacity>
             <TouchableOpacity onPress={this.acceptRequest.bind(this)}>
