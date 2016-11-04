@@ -84,6 +84,7 @@ export default class LoginForm extends Component {
   }
 
   login() {
+    this.setState({loading: true});
     fetch(`${Config.API_URL}/api/users/login`,{
       method: 'POST',
       headers: { "Content-Type" : "application/json" },
@@ -97,6 +98,7 @@ export default class LoginForm extends Component {
       this.props.getLocation(this._navigate.bind(this));
     })
     .catch(err => {
+      this.setState({loading: false});
       var context = this;
       this.setState({errorText: 'Incorrect username/password'});
       setTimeout(() => {

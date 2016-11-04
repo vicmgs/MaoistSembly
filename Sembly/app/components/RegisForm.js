@@ -90,6 +90,7 @@ export default class RegisForm extends Component {
   }
 
   register() {
+    this.setState({loading: true});
     fetch(`${Config.API_URL}/api/users/signup`,{
       method: 'POST',
       headers: { "Content-Type" : "application/json" },
@@ -110,6 +111,7 @@ export default class RegisForm extends Component {
       this.props.getLocation(this._navigate.bind(this));
     })
     .catch(err => {
+      this.setState({loading: false});
       var context = this;
       this.setState({errorText: 'This email is currently in use'});
       setTimeout(() => {
