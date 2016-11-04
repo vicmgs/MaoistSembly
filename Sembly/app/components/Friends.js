@@ -108,7 +108,8 @@ export default class Friends extends Component {
       requests: [],
       friendS: styles.selected,
       userS: styles.button,
-      requestS: styles.button
+      requestS: styles.button,
+      msg: ''
     };
   }
 
@@ -261,7 +262,8 @@ export default class Friends extends Component {
       feed: this.state.friends,
       friendS: styles.selected,
       requestS: styles.button,
-      userS:styles.button
+      userS:styles.button,
+      msg: ''
     });
   }
 
@@ -271,7 +273,8 @@ export default class Friends extends Component {
       feed: this.state.users || [],
       friendS: styles.button,
       requestS: styles.button,
-      userS:styles.selected
+      userS:styles.selected,
+      msg: ''
     });
   }
 
@@ -281,8 +284,12 @@ export default class Friends extends Component {
       feed: this.state.requests,
       friendS: styles.button,
       requestS: styles.selected,
-      userS:styles.button
+      userS:styles.button,
+      msg: ''
     });
+  }
+  setMsg(){
+    this.setState({msg: 'Friend Request Sent!'});
   }
 
   onSearchTextChange(event){
@@ -364,6 +371,8 @@ export default class Friends extends Component {
                   }
                   currentUserId={this.props.user._id}
                   view={this.state.view}
+                  setMsg={this.setMsg.bind(this)}
+                  friends={this.state.friends}
                   user={friend}
                   index={index}/>
               )

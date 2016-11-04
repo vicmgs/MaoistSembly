@@ -84,6 +84,21 @@ export default class UserCard extends Component {
     });
   }
 
+  reqShow(){
+    var show = true;
+    var context = this;
+    this.props.friends.forEach(function(guy){
+      if (String(guy._id) === String(context.props.user._id)) {
+        show = false;
+      }
+    });
+    if (String(this.props.currentUserId) === String(context.props.user._id)) {
+      show = false;
+    }
+
+    return show;
+  }
+
   render () {
     var background = this.props.index % 2 === 0 ? '#F5FCFF' : '#fff'
 
@@ -107,7 +122,7 @@ export default class UserCard extends Component {
               {this.props.view === 'Friends' ? <Icon name='cancel' style={styles.icon}></Icon> : <Text></Text>}
             </TouchableOpacity>
             <TouchableOpacity onPress={this.addFriend.bind(this)}>
-              {this.props.view === 'Users' ? <Icon name='person-add' style={styles.icon}></Icon> : <Text></Text>}
+              {this.props.view === 'Users' && this.reqShow() ? <Icon name='person-add' style={styles.icon}></Icon> : <Text></Text>}
             </TouchableOpacity>
             <TouchableOpacity onPress={this.acceptRequest.bind(this)}>
               {this.props.view === 'Requests' ? <Icon name='person-add' style={styles.icon}></Icon> : <Text></Text>}
