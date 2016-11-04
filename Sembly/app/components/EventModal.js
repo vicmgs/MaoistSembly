@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent'
   },
   description: {
-    fontSize: 18,
+    fontSize: 14,
     textAlign: 'center',
     color: '#656565'
   },
@@ -125,7 +125,7 @@ export default class EventModal extends Component {
     this.state = {
       visible: false,
       loading: true,
-      button: styles.button, 
+      button: styles.button,
       messages: [],
       friends: null
     };
@@ -211,7 +211,7 @@ export default class EventModal extends Component {
     });
   }
 
-    
+
 getFriends(search){
     var friendsArr = [];
     var search = search || '';
@@ -258,12 +258,12 @@ getFriends(search){
           <Image style={styles.image} source={{uri: this.state.event.image}}/>
           <View>
             <Text style={styles.title}> {this.state.event.name}</Text>
-            <Text style={styles.description}> Hosted by: {this.props.user.firstName} {this.props.user.lastName}</Text>
-             <Text style={styles.description}> Messages Can be seen by: {this.state.friends}</Text>
+            <Text style={styles.description}>Hosted by: {this.props.user.firstName} {this.props.user.lastName}</Text>
           </View>
           <View>
             <Text style={styles.description}>{this.state.event.tags.join(' ')}</Text>
-            <Text style={styles.description}>{this.transformDate(this.state.event.startTime)}</Text>
+            <Text style={styles.description}>{this.transformDate(this.state.event.startTime)} - </Text>
+            <Text style={styles.description}>{this.transformDate(this.state.event.endTime)}</Text>
           </View>
           <ScrollView style={styles.chats}>
          <GiftedChat

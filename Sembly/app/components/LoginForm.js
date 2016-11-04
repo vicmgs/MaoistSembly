@@ -74,7 +74,7 @@ inputContainer: {
 export default class LoginForm extends Component {
   constructor(props){
     super(props);
-    this.state = {loading: false, email: null, password: null, errorText: ''}
+    this.state = {loading: false, email: '', password: '', errorText: ''}
   }
 
   _navigate() {
@@ -84,6 +84,7 @@ export default class LoginForm extends Component {
   }
 
   login() {
+    this.setState({errorText: ''});
     this.setState({loading: true});
     fetch(`${Config.API_URL}/api/users/login`,{
       method: 'POST',
@@ -101,11 +102,6 @@ export default class LoginForm extends Component {
       this.setState({loading: false});
       var context = this;
       this.setState({errorText: 'Incorrect username/password'});
-      setTimeout(() => {
-        context.props.navigator.push({
-            name: 'LoginForm'
-        });
-      }, 1000);
     })
   }
 

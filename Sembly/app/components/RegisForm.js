@@ -90,36 +90,44 @@ export default class RegisForm extends Component {
   }
 
   register() {
-    this.setState({loading: true});
-    fetch(`${Config.API_URL}/api/users/signup`,{
-      method: 'POST',
-      headers: { "Content-Type" : "application/json" },
-      body: JSON.stringify({
-        firstName: this.state.first,
-        lastName: this.state.last,
-        email: this.state.email,
-        password: this.state.password,
-        confirm: this.state.confirm,
-        photoUrl: 'http://lionhallattorneys.com.ng/wp-content/uploads/2015/12/empty-profile.png'
+    var context = this;
+    this.setState({errorText: ''});
+    if (this.state.first == null || this.state.last == null || this.state.email == null || this.state.password == null || this.state.confirm == null){
+      this.setState({errorText: 'Please fill in all the fields'});
+    } else if (this.state.password !== this.state.confirm){
+      this.setState({errorText: 'Passwords do not match'});
+    } else {
+      this.setState({loading: true});
+      fetch(`${Config.API_URL}/api/users/signup`,{
+        method: 'POST',
+        headers: { "Content-Type" : "application/json" },
+        body: JSON.stringify({
+          firstName: this.state.first,
+          lastName: this.state.last,
+          email: this.state.email,
+          password: this.state.password,
+          confirm: this.state.confirm,
+          photoUrl: 'http://lionhallattorneys.com.ng/wp-content/uploads/2015/12/empty-profile.png'
+        })
       })
-    })
-    .then(response => {
-      return response.json();
-    })
-    .then( user => {
-      this.props.setUser(user);
-      this.props.getLocation(this._navigate.bind(this));
-    })
-    .catch(err => {
-      this.setState({loading: false});
-      var context = this;
-      this.setState({errorText: 'This email is currently in use'});
-      setTimeout(() => {
-        context.props.navigator.push({
-            name: 'RegisForm'
-        });
-      }, 1000);
-    })
+      .then(response => {
+        return response.json();
+      })
+      .then( user => {
+        this.props.setUser(user);
+        this.props.getLocation(this._navigate.bind(this));
+      })
+      .catch(err => {
+        this.setState({loading: false});
+        var context = this;
+        this.setState({errorText: 'This email is currently in use'});
+        setTimeout(() => {
+          context.props.navigator.push({
+              name: 'RegisForm'
+          });
+        }, 1000);
+      })
+    }
   }
 
   change() {

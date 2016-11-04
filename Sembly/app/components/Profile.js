@@ -115,35 +115,40 @@ export default class Profile extends Component {
   }
 
   update() {
+    var context = this;
     this.setState({errorText: null})
-    fetch(`${Config.API_URL}/api/users/update`,{
-      method: 'PUT',
-      headers: { "Content-Type" : "application/json" },
-      body: JSON.stringify({
-        firstName: this.state.first,
-        lastName: this.state.last,
-        oldEmail: this.props.user.email,
-        email: this.state.email,
-        password: this.state.password,
-        photoUrl: this.state.photo
+    if (this.state.password !== this.state.confirm){
+      this.setState({errorText: 'Passwords do not match'});
+    } else {
+      fetch(`${Config.API_URL}/api/users/update`,{
+        method: 'PUT',
+        headers: { "Content-Type" : "application/json" },
+        body: JSON.stringify({
+          firstName: this.state.first,
+          lastName: this.state.last,
+          oldEmail: this.props.user.email,
+          email: this.state.email,
+          password: this.state.password,
+          photoUrl: this.state.photo
+        })
       })
-    })
-    .then(response => {
-      return response.json();
-    })
-    .then( user => {
-      var context = this;
-      this.props.setUser(user);
-      this.setState({errorText: 'User Updated!'});
-      setTimeout(() => {
-        context.props.navigator.push({
-            name: 'Profile'
-        });
-      }, 1000);
-    })
-    .catch( response => {
-      this.setState({errorText: 'Email may already be taken.'});
-    });
+      .then(response => {
+        return response.json();
+      })
+      .then( user => {
+        var context = this;
+        this.props.setUser(user);
+        this.setState({errorText: 'User Updated!'});
+        setTimeout(() => {
+          context.props.navigator.push({
+              name: 'Profile'
+          });
+        }, 1000);
+      })
+      .catch( response => {
+        this.setState({errorText: 'Email is already taken'});
+      });
+    }
   }
 
   render(){

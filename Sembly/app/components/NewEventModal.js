@@ -22,6 +22,7 @@ export default class NewEventModal extends Component {
       friends: [],
       newEventName: '',
       newEventStartTime: new Date(),
+      newEventEndTime: new Date(),
       newEventTags: '',
       errorText: ''
     }
@@ -58,6 +59,7 @@ export default class NewEventModal extends Component {
       createdBy: this.props.user.firstName + ' ' + this.props.user.lastName,
       location: [],
       startTime: this.state.newEventStartTime,
+      endTime: this.state.newEventEndTime,
       image: 'http://blogs-images.forbes.com/steveolenski/files/2015/07/Messe_Luzern_Corporate_Event.jpg',
       tags: [],
       invitedUsers: [],
@@ -80,6 +82,7 @@ export default class NewEventModal extends Component {
         errorText: 'Event created successfully!',
         newEventName: '',
         newEventStartTime: new Date(),
+        newEventEndTime: new Date(),
         newEventTags: '',
       })
       setTimeout(() => {
@@ -98,17 +101,14 @@ export default class NewEventModal extends Component {
   render () {
     let context = this;
     return (
-      <Modal ref={'newEventModal'} style={styles.modal} isOpen={this.props.modalVisibility}>
+      <Modal animationType={'fade'} ref={'newEventModal'} style={styles.modal} isOpen={this.props.modalVisibility}>
         <View>
+        <ScrollView style={styles.allContainer}>
           <View style={styles.closeButtonContainer}>
             <Text style={styles.errorText}>{this.state.errorText}</Text>
             <TouchableOpacity onPress={() => context.refs.newEventModal.close()}>
               <Icon style={styles.closeButton} name='close'/>
             </TouchableOpacity>
-          </View>
-
-          <View style={styles.headerContainer}>
-            <Text style={styles.header}>Create a New Event</Text>
           </View>
 
           <View style={styles.textInputContainer}>
@@ -126,11 +126,19 @@ export default class NewEventModal extends Component {
               onChangeText={(text) => this.setState({newEventTags: text})}
               />
           </View>
-
           <View style={styles.dateInputContainer}>
             <DatePickerIOS
               date={this.state.newEventStartTime}
               onDateChange={(d) => {this.setState({newEventStartTime:d})}}
+            />
+          </View>
+          <View>
+            <Text style={styles.textInput2}>To:</Text>
+          </View>
+          <View style={styles.dateInputContainer}>
+            <DatePickerIOS
+              date={this.state.newEventEndTime}
+              onDateChange={(d) => {this.setState({newEventEndTime:d})}}
             />
           </View>
 
@@ -150,6 +158,7 @@ export default class NewEventModal extends Component {
             </MKButton>
           </View>
 
+        </ScrollView>
         </View>
       </Modal>
     )
@@ -160,6 +169,9 @@ export default class NewEventModal extends Component {
 const styles = StyleSheet.create({
   modal: {
     marginTop: 40
+  },
+  allContainer: {
+    margin: 20
   },
   errorText: {
     fontSize: 16,
@@ -203,6 +215,16 @@ const styles = StyleSheet.create({
     // borderWidth: 1,
     // borderColor: 'grey',
     textAlign: 'left'
+  },
+  textInput2: {
+    flex:1,
+    height: 36,
+    marginRight: 5,
+    flex: 4,
+    fontSize: 18,
+    // borderWidth: 1,
+    color: 'grey',
+    textAlign: 'center'
   },
   friendsCheckGroup: {
     flexDirection: 'row',
