@@ -1,6 +1,7 @@
 var eventsController = require('./controllers/eventsController');
 var friendController = require('./controllers/friendController');
 var userController = require('./controllers/userController');
+var messageController = require('./controllers/messageController');
 
 module.exports = function (app, express) {
   //Handle Auth and login/signup
@@ -29,4 +30,5 @@ module.exports = function (app, express) {
   app.post('/api/events/invited', eventsController.getInvited);
   app.post('/api/events/location', eventsController.getEvents);
   app.post('/api/events/endEvent', eventsController.endEvent);
+  app.post('/api/events/message', messageController.addMessage)
 };

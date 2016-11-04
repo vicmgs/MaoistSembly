@@ -35,7 +35,7 @@ var loserId;
 
 describe('Friend Controller', function() {
   before(function(done){
-    this.timeout(4000);
+    this.timeout(6000);
     User.remove({}).exec()
     .then(function(){
       var users = [new User(testUser), new User(friend), new User(loser)];

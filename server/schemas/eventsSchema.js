@@ -1,6 +1,8 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var User = require('./userSchema');
+var Message = require('./messageSchema');
+
 var eventSchema = new Schema({
   id: Schema.Types.ObjectId,
   name: String,

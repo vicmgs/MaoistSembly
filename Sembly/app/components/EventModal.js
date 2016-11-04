@@ -125,14 +125,17 @@ export default class EventModal extends Component {
     this.state = {
       visible: false,
       loading: true,
-      button: styles.button,
-      messages: []
+      button: styles.button, 
+      messages: [],
+      friends: null
     };
     this.onSend = this.onSend.bind(this);
   }
+
   componentWillMount() {
     this.setState({loading:true})
-      this.setState({
+    this.getFriends()
+    this.setState({
       messages: [
         {
           _id: 1,
@@ -148,7 +151,18 @@ export default class EventModal extends Component {
     });
   }
 
+
   onSend(messages = []) {
+    console.log('this.props', this.props)
+    fetch(`${Config.API_URL}/api/events/message`,{
+      method: 'POST',
+      headers: { "Content-Type" : "application/json" },
+      body: JSON.stringify({userId: this.props.user._id, text: messages[0].text, eventId: this.props.event})
+    })
+    .then(response => {
+      console.log('response', response)
+    })
+
   this.setState((previousState) => {
     return {
       messages: GiftedChat.append(previousState.messages, messages),
@@ -182,18 +196,57 @@ export default class EventModal extends Component {
 
     return day + part1 + part2 + hour + ':' + part4 + amOrPm;
   }
+
   getEvent() {
     fetch(`${Config.API_URL}/api/events/` + this.props.event)
     .then(response => {
       return response.json();
     })
     .then( event => {
+      console.log('event', event)
       this.setState({event: event, loading: false});
     })
     .catch( error => {
       console.log(error);
     });
   }
+
+    
+getFriends(search){
+    var friendsArr = [];
+    var search = search || '';
+    fetch(`${Config.API_URL}/api/friends/getFriends`,{
+      method: 'POST',
+      headers: { "Content-Type" : "application/json" },
+      body: JSON.stringify({userId: this.props.user._id, search: search})
+    })
+    .then(response => {
+      return response.json();
+    })
+    .then( friends => {
+        for (var i = 0; i < friends.length; i++) {
+          friendsArr.push(friends[i].firstName)
+        }
+        this.setState({
+          friends: friendsArr.toString(),
+          loading: false
+        });
+
+      if(search.length===0){
+        this.setState({
+          feed: friends,
+          friends: friends,
+          loading: false
+        })
+      }
+
+      // alert(this.props.user.friends.length)
+    })
+    .catch( error => {
+      console.log(error);
+    });
+  }
+
 
   getRender () {
     if (this.state.loading === true) {
@@ -204,7 +257,9 @@ export default class EventModal extends Component {
         <View>
           <Image style={styles.image} source={{uri: this.state.event.image}}/>
           <View>
-            <Text style={styles.title} >{this.state.event.name}</Text>
+            <Text style={styles.title}> {this.state.event.name}</Text>
+            <Text style={styles.description}> Hosted by: {this.props.user.firstName} {this.props.user.lastName}</Text>
+             <Text style={styles.description}> Messages Can be seen by: {this.state.friends}</Text>
           </View>
           <View>
             <Text style={styles.description}>{this.state.event.tags.join(' ')}</Text>

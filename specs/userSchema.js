@@ -7,7 +7,7 @@ mongoose.Promise = bluebird;
 
 
 describe('User Schema', function() {
-
+  this.timeout(5000);
   describe('User Schema', function() {
     it('schema should have properties id, firstName, lastName, email, password, salt, friends, requests, saved, hosting, invitedTo, photoUrl, location', function() {
       expect(User.schema.obj).to.have.all.keys(['id', 'firstName', 'lastName', 'email', 'password', 'salt', 'friends', 'requests','invitedTo', 'saved', 'hosting', 'photoUrl', 'location']);
@@ -24,7 +24,7 @@ describe('User Schema', function() {
       done();
     });
 
-    });
+  });
 
     it('should make sure that the password in the database does not equal the string ', function(done){
       var stringPassword = 'dropItLikeItsHot';

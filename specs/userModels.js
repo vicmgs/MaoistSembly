@@ -11,6 +11,7 @@ var testUser = {
 }
 
 describe('User Models', function() {
+  this.timeout(9000);
   before(function(done){
     User.remove({}).exec()
     .then(function(){
@@ -120,7 +121,9 @@ describe('User Models', function() {
   });
 
   describe('Update user', () => {
+    this.timeout(9000);
     it('should update firstName, lastName and photoUrl', (done) => {
+      console.log('inside describe update user start')
       var newFirstName = 'James';
       var newLastName = 'Bond'
       var newPhotoUrl = 'http://vignette1.wikia.nocookie.net/jamesbond/images/b/bc/James_Bond_%28Literary%29_-_Profile.jpg'
@@ -143,17 +146,21 @@ describe('User Models', function() {
     });
 
     it('should update password and able to login using new password', (done) => {
+      this.timeout(9000);
       var newPassword = 'newPassword';
 
       userModels.userSearch('James')
       .then((users) => {
+        console.log('inside the update password it block')
         var user = users[0];
         user.password = newPassword;
         user.oldEmail = user.email;
         userModels.updateUser(user)
         .then((updatedUser) => {
+          console.log('finishing touches')
           userModels.logIn(testUser.email, newPassword)
           .then(function(user) {
+            console.log('done about to be called')
             expect(user.firstName).to.equal('James');
             done();
           });
