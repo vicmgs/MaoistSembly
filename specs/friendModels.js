@@ -140,27 +140,5 @@ describe('Friend Models', function() {
     });
   });
 
-  describe('remove Friend', function(){
-    before(function(done) {
-      friendModels.removeFriend(testId, friendId)
-      .then(function(){
-        done();
-      })
-    })
-    it('should remove the friend to the user', function(done){
-      User.findOne({'email': 'test@test.com'}).exec()
-      .then(function(user) {
-        expect(user.friends.length).to.equal(1);
-        done();
-      });
-    });
-    it('should remove the user from the friend\'s friend list' , function(done){
-      User.findOne({'email': 'friend@test.com'}).exec()
-      .then(function(user) {
-        expect(user.friends.length).to.equal(0);
-        done();
-      });
-    });
-  });
-  
+
 });
