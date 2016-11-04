@@ -77,7 +77,7 @@ export default class Feed extends Component {
   render(){
     if (this.state.loading) {
       return (
-        <OurDrawer user={this.props.user} topBarFilterVisible={false} topBarName={'Feed'} _navigate={_navigate.bind(this)}>
+        <OurDrawer user={this.props.user} topBarFilterVisible={false} topBarName={'Events'} _navigate={_navigate.bind(this)}>
           <View style={styles.spinner}>
             <Spinner />
           </View>

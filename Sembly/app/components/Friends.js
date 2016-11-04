@@ -103,6 +103,9 @@ export default class Friends extends Component {
       loading: true,
       searchString: '',
       view: 'Friends',
+      friends: [],
+      users: [],
+      requests: [],
       friendS: styles.selected,
       userS: styles.button,
       requestS: styles.button
@@ -112,6 +115,46 @@ export default class Friends extends Component {
   componentWillMount(){
     this.getFriends();
     this.getNewRequests();
+  }
+  getFriends(search){
+    var search = search || '';
+    fetch(`${Config.API_URL}/api/friends/getFriends`,{
+      method: 'POST',
+      headers: { "Content-Type" : "application/json" },
+      body: JSON.stringify({userId: this.props.user._id, search: search})
+    })
+    .then(response => {
+      return response.json();
+    })
+    .then( friends => {
+        this.setState({
+          feed: friends,
+          friends: friends,
+          loading: false
+        });
+    })
+    .catch( error => {
+      console.log(error);
+    });
+  }
+  getNewRequests(context){
+     fetch(`${Config.API_URL}/api/friends/getRequests`,{
+       method: 'POST',
+       headers: { "Content-Type" : "application/json" },
+       body: JSON.stringify({userId: this.props.user._id})
+     })
+     .then(response => {
+       return response.json();
+     })
+     .then( requests => {
+        this.setState({
+          requests: requests,
+          loading: false
+        });
+     })
+     .catch( error => {
+      console.log(error);
+    });
   }
 
   searchUsers(search){
@@ -127,6 +170,7 @@ export default class Friends extends Component {
     .then( users => {
       this.setState({
         feed: users,
+        users: users,
         loading: false
       });
     })
@@ -134,31 +178,7 @@ export default class Friends extends Component {
       console.log(error);
     });
   }
-
-  //need a better way to get the rest of refreshed version of friend requests
-  //every time we go back in we use the old version of the user when we logged in, not
-  //the new version in the database
-  //set new user each time a change is done?
-  getNewRequests(context){
-     fetch(`${Config.API_URL}/api/friends/getRequests`,{
-       method: 'POST',
-       headers: { "Content-Type" : "application/json" },
-       body: JSON.stringify({userId: this.props.user._id})
-     })
-     .then(response => {
-       return response.json();
-     })
-     .then( requests => {
-        this.setState({
-          requests: requests
-        });
-     })
-     .catch( error => {
-      console.log(error);
-    });
-  }
-
-  getFriends(search){
+  searchFriends(search){
     var search = search || '';
     fetch(`${Config.API_URL}/api/friends/getFriends`,{
       method: 'POST',
@@ -169,39 +189,51 @@ export default class Friends extends Component {
       return response.json();
     })
     .then( friends => {
-      if(search.length>0){
-        this.setState({
-          feed: friends,
-          loading: false
-        });
-      }
-      if(search.length===0){
         this.setState({
           feed: friends,
           friends: friends,
           loading: false
-        })
-      }
-
-      // alert(this.props.user.friends.length)
+        });
     })
     .catch( error => {
+      console.log(error);
+    });
+  }
+  searchNewRequests(context){
+     fetch(`${Config.API_URL}/api/friends/getRequests`,{
+       method: 'POST',
+       headers: { "Content-Type" : "application/json" },
+       body: JSON.stringify({userId: this.props.user._id})
+     })
+     .then(response => {
+       return response.json();
+     })
+     .then( requests => {
+        this.setState({
+          requests: requests,
+          feed: requests,
+          loading: false
+        });
+     })
+     .catch( error => {
       console.log(error);
     });
   }
 
   filterFriends(){
     this.setState({view: 'Friends'});
-    this.setState({feed: this.state.friends,
-    friendS: styles.selected,
+    this.setState({
+      feed: this.state.friends,
+      friendS: styles.selected,
       requestS: styles.button,
-      userS:styles.button});
+      userS:styles.button
+    });
   }
 
   filterUsers(){
     this.setState({view: 'Users'});
     this.setState({
-      feed: [],
+      feed: this.state.users || [],
       friendS: styles.button,
       requestS: styles.button,
       userS:styles.selected
@@ -210,10 +242,12 @@ export default class Friends extends Component {
 
   filterRequests(){
     this.setState({view: 'Requests'});
-    this.setState({feed: this.state.requests,
-    friendS: styles.button,
+    this.setState({
+      feed: this.state.requests,
+      friendS: styles.button,
       requestS: styles.selected,
-      userS:styles.button});
+      userS:styles.button
+    });
   }
 
   onSearchTextChange(event){
@@ -222,10 +256,10 @@ export default class Friends extends Component {
 
   onSearchGo(){
     if(this.state.view === 'Friends'){
-      this.getFriends(this.state.searchString);
+      this.searchFriends(this.state.searchString);
     }
     if(this.state.view === 'Requests'){
-
+      this.searchNewRequests(this.state.searchString);
     }
     if(this.state.view === 'Users'){
       this.searchUsers(this.state.searchString);
@@ -235,7 +269,7 @@ export default class Friends extends Component {
   render(){
     if (this.state.loading) {
       return (
-        <OurDrawer topBarFilterVisible={false} topBarName={'Feed'} _navigate={_navigate.bind(this)}>
+        <OurDrawer topBarFilterVisible={false} topBarName={'Friends'} _navigate={_navigate.bind(this)}>
           <View style={styles.spinner}>
             <Spinner/>
           </View>
@@ -245,7 +279,7 @@ export default class Friends extends Component {
 
 
     return (
-      <OurDrawer user={this.props.user} topBarName={'Profile'} _navigate={_navigate.bind(this)}>
+      <OurDrawer user={this.props.user} topBarName={'Friends'} _navigate={_navigate.bind(this)}>
         <View style={styles.container}>
           <View style={styles.innerNav}>
             <TouchableOpacity onPress={this.filterFriends.bind(this)} style={this.state.friendS}>
@@ -277,7 +311,7 @@ export default class Friends extends Component {
                   key={index}
                   refreshUserFriends={
                     ()=> {
-                      this.setState({view: 'Friends'});
+                      this.filterUsers();
                       this.getFriends();
                     }
                   }
