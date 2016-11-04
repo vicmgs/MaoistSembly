@@ -60,6 +60,11 @@ export default class Feed extends Component {
       return response.json();
     })
     .then( events => {
+      events.sort(function(a, b) {
+        if(a.endTime < b.endTime) return 1;
+        if(a.endTime > b.endTime) return -1;
+        return 0;
+      });
       this.setState({events: events, loading: false});
     })
     .catch( error => {
