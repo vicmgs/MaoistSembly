@@ -26,6 +26,12 @@ buttonText: {
   color: 'white',
   alignSelf: 'center'
 },
+errorText: {
+  fontSize: 16,
+  fontWeight: 'bold',
+  color: 'red',
+  paddingLeft: 10
+},
 button: {
   height: 36,
   flex: 1,
@@ -68,7 +74,7 @@ inputContainer: {
 export default class LoginForm extends Component {
   constructor(props){
     super(props);
-    this.state = {loading: false, email: null, password: null}
+    this.state = {loading: false, email: null, password: null, errorText: ''}
   }
 
   _navigate() {
@@ -92,9 +98,14 @@ export default class LoginForm extends Component {
       this.props.getLocation(this._navigate.bind(this));
     })
     .catch(err => {
-      this.props.navigator.push({
-          name: 'LoginForm'
-      });
+      this.setState({loading: false});
+      var context = this;
+      this.setState({errorText: 'Incorrect username/password'});
+      setTimeout(() => {
+        context.props.navigator.push({
+            name: 'LoginForm'
+        });
+      }, 1000);
     })
   }
 
@@ -113,12 +124,15 @@ export default class LoginForm extends Component {
         <View>
           <View style={styles.container}>
             <View style={styles.inputContainer}>
+              <Text style={styles.errorText}>{this.state.errorText}</Text>
+              <Text></Text>
               <TextInput
                 style={styles.searchInput}
                 placeholder='Enter email'
                 onChangeText={(text) => this.setState({email:text})}
                 autoCapitalize='none'
                 autoCorrect={false}
+                ref={'textInput1'}
                 // onChange={this.onSearchTextChange.bind(this)}
                 />
               <TextInput
@@ -128,6 +142,7 @@ export default class LoginForm extends Component {
                 onChangeText={(pwtext) => this.setState({password:pwtext})}
                 autoCapitalize='none'
                 autoCorrect={false}
+                ref={'textInput2'}
                 // onChange={this.onSearchTextChange.bind(this)}
                 />
             </View>

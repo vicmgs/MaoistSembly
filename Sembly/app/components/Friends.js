@@ -50,6 +50,13 @@ var styles = StyleSheet.create({
     color: 'white',
     alignSelf: 'center'
   },
+  errorText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: 'red',
+    paddingLeft: 10,
+    textAlign: 'left',
+  },
   button: {
     height: 36,
     flex: 1,
@@ -289,7 +296,13 @@ export default class Friends extends Component {
     });
   }
   setMsg(){
+    var context = this;
     this.setState({msg: 'Friend Request Sent!'});
+    setTimeout(() => {
+      context.setState({
+        msg: ''
+      })
+    }, 1000);
   }
 
   onSearchTextChange(event){
@@ -334,6 +347,9 @@ export default class Friends extends Component {
               <Text style={styles.buttonText}>Friend Requests</Text>
             </TouchableOpacity>
           </View>
+          <View style={styles.errorContainer}>
+            <Text style={styles.errorText}>{this.state.msg}</Text>
+          </View>
           <View style={styles.inputContainer}>
             <TextInput
               style={styles.searchInput}
@@ -362,6 +378,11 @@ export default class Friends extends Component {
                       this.filterFriends();
                       this.getFriends();
                       this.getNewRequests();
+                    }
+                  }
+                  setMsg={
+                    () => {
+                      this.setMsg();
                     }
                   }
                   rejectRequest = {
