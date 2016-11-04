@@ -63,10 +63,7 @@ export default class UserCard extends Component {
       body: JSON.stringify({userId: this.props.currentUserId, friendId: this.props.user._id})
     })
     .then(response => {
-      // alert(response.status)
-      this.props.refreshUserFriends();
-      this.props.getNewRequests(this);
-      return response.json();
+      this.props.acceptRequest();
     })
     .catch( error => {
       console.log(error);
@@ -81,10 +78,7 @@ export default class UserCard extends Component {
       body: JSON.stringify({userId: this.props.currentUserId, friendId: this.props.user._id})
     })
     .then(response => {
-      // alert(response.status)
-      this.props.refreshUserFriends();
-      this.props.getNewRequests(this);
-      return response.json();
+      this.props.rejectRequest();
     })
     .catch( error => {
       console.log(error);
@@ -93,22 +87,8 @@ export default class UserCard extends Component {
 
   render () {
     var background = this.props.index % 2 === 0 ? '#F5FCFF' : '#fff'
-    var message;
-    if (this.props.friends === 'friends') {
-    	message = 'Remove '+ this.props.user.firstName +' from your friends list?'
-    } else if (this.props.friends === 'users') {
-    	message = 'Request ' + this.props.user.firstName +' to your friends list?'
-    } else {
-    	message = 'Accept ' + this.props.user.firstName +'\'s friend request?'
-    }
+
     return (
-      	  // <Modal>
-      	  // 	<View>
-	      	 //  	<Text> {message} </Text>
-	      	 //  	<TouchableOpacity></TouchableOpacity>
-	      	 //  	<TouchableOpacity></TouchableOpacity>
-      	  // 	</View>
-      	  // </Modal>
       <View>
 	      <TouchableOpacity key={this.props.user._id} style={{
 	        justifyContent: 'flex-start',
@@ -120,12 +100,12 @@ export default class UserCard extends Component {
 	      }}>
 	        <Image style={styles.image} source={{uri: this.props.user.photoUrl}}/>
 	        <View style={styles.text}>
-	          <Text style={styles.title}>{this.props.user.firstName+' '+this.props.user.lastName}</Text>
-	          <Text style={styles.instructions}>{this.props.user.email}</Text>
+	          <Text style={styles.instructions}>{this.props.user.firstName}</Text>
+            <Text style={styles.instructions}>{this.props.user.lastName}</Text>
           </View>
           <View style={styles.buttons}>
             <TouchableOpacity onPress={this.removeFriend.bind(this)}>
-              {this.props.view === 'Friends' ? <Text></Text> : <Text></Text>}
+              {this.props.view === 'Friends' ? <Icon name='cancel' style={styles.icon}></Icon> : <Text></Text>}
             </TouchableOpacity>
             <TouchableOpacity onPress={this.addFriend.bind(this)}>
               {this.props.view === 'Users' ? <Icon name='person-add' style={styles.icon}></Icon> : <Text></Text>}
@@ -158,7 +138,9 @@ const styles = StyleSheet.create({
     color: 'black'
   },
   instructions: {
-    color: 'black'
+    color: 'black',
+    margin: 4,
+    width: 100
   },
   image: {
   	borderRadius: 25,
