@@ -8,7 +8,7 @@ module.exports = (req, res) => {
 	}
 	friendModels.addFriend(req.body.userId, req.body.friendId)
 	.then( success => {
-		res.sendStatus(201);
+		res.status(201).send(success);
 	})
 	.catch( error => {
 		console.log(error);
